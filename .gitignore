@@ -1,0 +1,9 @@
+.env
+*.pyc
+__pycache__/
+.next/
+node_modules/
+*.egg-info/
+.DS_Store
+backtest_results/
+*.log

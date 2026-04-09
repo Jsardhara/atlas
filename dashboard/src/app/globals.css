@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-up: #22c55e;
+  --color-down: #ef4444;
+  --color-neutral: #94a3b8;
+}
+
+body {
+  font-family: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+}
+
+.agent-commander { --agent-color: #8b5cf6; }
+.agent-oracle     { --agent-color: #3b82f6; }
+.agent-guardian   { --agent-color: #f59e0b; }
+.agent-trader     { --agent-color: #10b981; }
+.agent-sage       { --agent-color: #ec4899; }
+.agent-architect  { --agent-color: #6366f1; }
+
+.live-dot {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.scrollbar-thin::-webkit-scrollbar { width: 4px; }
+.scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+.scrollbar-thin::-webkit-scrollbar-thumb { background: #334155; border-radius: 2px; }
