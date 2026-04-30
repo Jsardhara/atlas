@@ -1,16 +1,25 @@
-from pydantic_settings import BaseSettings
+"""Atlas runtime settings.
+
+LLM auth is handled by the Claude Agent SDK via the host's ``~/.claude/``
+session — there is no Anthropic API key in this file. ``ATLAS_BEARER_TOKEN``
+is the shared secret between Jarvis and the Atlas API surface.
+"""
 from functools import lru_cache
+
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    # OpenRouter
-    openrouter_api_key: str
-    agent_commander_model: str = "deepseek/deepseek-r1:free"
-    agent_oracle_model: str = "google/gemini-2.0-flash-exp:free"
-    agent_guardian_model: str = "deepseek/deepseek-r1:free"
-    agent_trader_model: str = "google/gemini-flash-1.5-8b:free"
-    agent_sage_model: str = "meta-llama/llama-3.3-70b-instruct:free"
-    agent_architect_model: str = "qwen/qwen-2.5-coder-32b-instruct:free"
+    # Claude model routing (per-agent). Auth is via Claude Code subscription;
+    # no API key field. See agents/shared/claude_client.py.
+    agent_oracle_model: str = "claude-sonnet-4-6"
+    agent_architect_model: str = "claude-opus-4-7"
+    agent_guardian_model: str = "claude-haiku-4-5"
+    agent_trader_model: str = "claude-sonnet-4-6"
+    agent_sage_model: str = "claude-haiku-4-5"
+
+    # Jarvis ↔ Atlas auth
+    atlas_bearer_token: str = ""
 
     # Kraken
     kraken_api_key: str = ""
@@ -33,7 +42,6 @@ class Settings(BaseSettings):
     max_leverage: int = 5
     daily_loss_limit_usd: float = 50.0
     max_portfolio_risk_pct: float = 0.10
-    commander_alert_threshold: float = 0.05
 
     # External APIs
     cryptopanic_api_key: str = ""

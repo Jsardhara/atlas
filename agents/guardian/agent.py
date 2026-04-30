@@ -37,6 +37,11 @@ class GuardianAgent(BaseAgent):
     model_env_key = "agent_guardian_model"
     personality = PERSONALITY
 
+    def __init__(self, settings):
+        super().__init__(settings)
+        # Signals held here until Commander issues PIPELINE_DECISION
+        self._pending_signals: dict[str, dict] = {}
+
     async def _run_loop(self) -> None:
         # Guardian is event-driven — no scheduled loop needed
         while True:
@@ -45,16 +50,23 @@ class GuardianAgent(BaseAgent):
 
     async def process_message(self, msg: AtlasMessage) -> None:
         if msg.message_type == MessageType.MARKET_SIGNAL:
-            await self._evaluate_signal(msg)
+            # Store signal keyed by signal_id; wait for Commander's decision
+            signal_id = msg.payload.get("signal_id")
+            if signal_id:
+                self._pending_signals[signal_id] = {"payload": msg.payload, "msg_id": msg.id}
         elif msg.message_type == MessageType.PIPELINE_DECISION:
-            if msg.payload.get("decision") == "advance":
-                # Commander approved — re-fetch the signal and evaluate
-                pass
+            decision = msg.payload.get("decision")
+            signal_id = msg.payload.get("signal_id")
+            if decision == "advance" and signal_id in self._pending_signals:
+                pending = self._pending_signals.pop(signal_id)
+                await self._evaluate_signal(pending["payload"], pending["msg_id"])
+            elif signal_id:
+                # Blocked or expired — discard
+                self._pending_signals.pop(signal_id, None)
         elif msg.message_type == MessageType.CHAT_MESSAGE and msg.target_agent == AgentID.GUARDIAN:
             await self._on_chat(msg)
 
-    async def _evaluate_signal(self, msg: AtlasMessage) -> None:
-        signal = msg.payload
+    async def _evaluate_signal(self, signal: dict, correlation_id: str) -> None:
         pair = signal.get("pair", "")
         await self.emit_status(f"Evaluating {pair} {signal.get('direction')} signal")
 
@@ -103,7 +115,7 @@ Respond in JSON as specified in your system prompt."""
         async with get_session() as sess:
             await sess.execute(text("""
                 UPDATE signals
-                SET status = :status, guardian_notes = :notes, modified_params = :mods::jsonb
+                SET status = :status, guardian_notes = :notes, modified_params = CAST(:mods AS jsonb)
                 WHERE id = :id
             """), {
                 "status": "approved" if decision == "APPROVE" else
@@ -124,7 +136,7 @@ Respond in JSON as specified in your system prompt."""
                     "guardian_reasoning": result.get("reasoning"),
                     "risk_score": result.get("risk_score", 5),
                 },
-                correlation_id=msg.id,
+                correlation_id=correlation_id,
                 priority=4,
             ))
             logger.info("[Guardian] %s: %s %s (risk %d/10)",
@@ -132,6 +144,7 @@ Respond in JSON as specified in your system prompt."""
         else:
             await self._reject(signal, result.get("reasoning", "Rejected by Guardian"),
                                risk_score=result.get("risk_score", 8))
+
 
     async def _reject(self, signal: dict, reason: str, risk_score: int = 8) -> None:
         async with get_session() as sess:

@@ -1,4 +1,5 @@
 """Kraken REST API wrapper using python-kraken-sdk."""
+import asyncio
 import logging
 from typing import Any
 
@@ -17,7 +18,7 @@ class KrakenClient:
 
     def _init_client(self) -> None:
         try:
-            from kraken.spot import SpotOrderBook, Trade, User, Market
+            from kraken.spot import Trade, User, Market
             self._trade = Trade(
                 key=self.settings.kraken_api_key,
                 secret=self.settings.kraken_api_secret,
@@ -36,7 +37,7 @@ class KrakenClient:
         if not self._user:
             return {}
         try:
-            result = self._user.get_balance()
+            result = await asyncio.to_thread(self._user.get_balance)
             return {k: float(v) for k, v in result.items()}
         except Exception as e:
             logger.error("Kraken get_balance error: %s", e)
@@ -46,7 +47,7 @@ class KrakenClient:
         if not self._trade:
             return []
         try:
-            result = self._trade.get_open_orders()
+            result = await asyncio.to_thread(self._trade.get_open_orders)
             return list(result.get("open", {}).values())
         except Exception as e:
             logger.error("Kraken get_open_orders error: %s", e)
@@ -83,7 +84,7 @@ class KrakenClient:
             params["leverage"] = str(leverage)
 
         try:
-            result = self._trade.create_order(**params)
+            result = await asyncio.to_thread(self._trade.create_order, **params)
             logger.info(
                 "Order placed pair=%s side=%s vol=%s validate=%s result=%s",
                 pair, side, volume, validate, result
@@ -97,16 +98,28 @@ class KrakenClient:
         if not self._trade:
             return {}
         try:
-            return self._trade.cancel_order(txid=order_id)
+            return await asyncio.to_thread(self._trade.cancel_order, txid=order_id)
         except Exception as e:
             logger.error("Kraken cancel_order error: %s", e)
             return {"error": str(e)}
+
+    async def get_asset_pairs(self) -> dict:
+        """Public AssetPairs endpoint. Used for universe discovery and shortable
+        check by Guardian."""
+        try:
+            from kraken.spot import Market
+            market = Market()
+            result = await asyncio.to_thread(market.get_asset_pairs)
+            return result if isinstance(result, dict) else {}
+        except Exception as e:
+            logger.error("Kraken get_asset_pairs error: %s", e)
+            return {}
 
     async def get_ticker(self, pair: str) -> dict:
         try:
             from kraken.spot import Market
             market = Market()
-            result = market.get_ticker(pair=pair)
+            result = await asyncio.to_thread(market.get_ticker, pair=pair)
             return result.get(pair, {})
         except Exception as e:
             logger.error("Kraken get_ticker error: %s", e)
@@ -119,7 +132,7 @@ class KrakenClient:
             params = {}
             if start:
                 params["start"] = start
-            result = self._trade.get_trades_history(**params)
+            result = await asyncio.to_thread(self._trade.get_trades_history, **params)
             return list(result.get("trades", {}).values())
         except Exception as e:
             logger.error("Kraken trade history error: %s", e)

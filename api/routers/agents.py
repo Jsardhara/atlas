@@ -68,7 +68,7 @@ async def resume_agent(agent_id: str, request: Request):
 async def update_config(agent_id: str, body: ConfigPatch, request: Request):
     async with get_db(request) as sess:
         await sess.execute(text(
-            "UPDATE agents SET config = config || :cfg::jsonb WHERE id = :id"
+            "UPDATE agents SET config = config || CAST(:cfg AS jsonb) WHERE id = :id"
         ), {"id": agent_id, "cfg": json.dumps(body.config)})
         await sess.commit()
     return {"status": "updated"}
@@ -88,17 +88,6 @@ async def chat_with_agent(agent_id: str, body: ChatRequest, request: Request):
         await sess.commit()
 
     # Publish chat message to bus — agent will respond
-    msg = {
-        "id": str(uuid.uuid4()),
-        "source_agent": "user",
-        "target_agent": agent_id,
-        "message_type": "chat_message",
-        "payload": json.dumps({
-            "content": body.content,
-            "session_id": session_id,
-        }),
-        "priority": "3",
-    }
     await redis.xadd("atlas:events", {"json": json.dumps({
         "source_agent": "user",
         "target_agent": agent_id,

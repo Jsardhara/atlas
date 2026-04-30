@@ -2,19 +2,19 @@
 import asyncio
 import json
 import logging
-import uuid
 from datetime import datetime
-from pathlib import Path
 
 from sqlalchemy import text
 
 from shared.base_agent import BaseAgent
 from shared.config import get_settings
 from shared.db import get_session
-from shared.protocols import AgentID, AtlasMessage, MarketSignal, MessageType
+from shared.protocols import AgentID, AtlasMessage, MessageType
 
 from .data_sources.freqtrade import FreqtradeClient
+from .data_sources.kraken_market import discover_universe
 from .data_sources.news import fetch_cryptopanic, fetch_fear_and_greed, fetch_rss_headlines
+from .screener import DEFAULT_TOP_N, screen_universe
 
 logger = logging.getLogger(__name__)
 
@@ -42,8 +42,8 @@ When asked to generate signals, respond with valid JSON:
 }
 Only include signals with confidence >= 0.6."""
 
-TRADING_PAIRS = ["BTC/USD", "ETH/USD", "SOL/USD", "XRP/USD"]
 SCAN_INTERVAL = 900  # 15 minutes
+SCREENER_TOP_N = DEFAULT_TOP_N
 
 
 class OracleAgent(BaseAgent):
@@ -72,10 +72,21 @@ class OracleAgent(BaseAgent):
     async def _research_cycle(self) -> None:
         await self.emit_status("Starting research cycle")
 
-        # Fetch all data sources concurrently
+        # Stage 1 — universe + cheap screener (no LLM)
+        await self.emit_status("Discovering Kraken USD universe")
+        universe = await discover_universe()
+        candidates = await screen_universe(universe, top_n=SCREENER_TOP_N)
+        candidate_pairs = [c.pair for c in candidates] or [info.wsname for info in universe[:4]]
+        shortable_set = sorted({info.wsname for info in universe if info.shortable})
+        logger.info(
+            "[Oracle] Screener selected %d/%d pairs (shortable=%d)",
+            len(candidates), len(universe), len(shortable_set),
+        )
+
+        # Stage 2 — external context + LLM analyzes screener candidates
         await self.emit_status("Fetching market data")
         news, rss, fng, ft_status, ft_perf, ctx = await asyncio.gather(
-            fetch_cryptopanic(self.settings.cryptopanic_api_key, TRADING_PAIRS),
+            fetch_cryptopanic(self.settings.cryptopanic_api_key, candidate_pairs),
             fetch_rss_headlines(),
             fetch_fear_and_greed(),
             self.freqtrade.get_status(),
@@ -88,7 +99,20 @@ class OracleAgent(BaseAgent):
         sage_insights = ctx.get("sage_insights", {})
         open_pairs = [p["pair"] for p in ctx.get("open_positions", [])]
 
+        screener_lines = [
+            f"- {c.pair} score={c.score:+.2f} dir={c.suggested_direction} "
+            f"shortable={c.shortable} {c.snapshot.get('indicators', '')}"
+            for c in candidates
+        ]
+
         prompt = f"""Analyze current crypto market conditions and generate trading signals.
+
+### Screener Top Candidates (Stage 1, pre-LLM)
+{chr(10).join(screener_lines) if screener_lines else "(no screener output — fallback to candidate_pairs)"}
+
+### Shortable Pairs (margin-eligible on Kraken)
+{shortable_set}
+
 
 ## Market Data
 
@@ -111,8 +135,10 @@ class OracleAgent(BaseAgent):
 {json.dumps(sage_insights, indent=2)}
 
 ## Task
-Generate trading signals for: {TRADING_PAIRS}
-Skip pairs with open positions. Return JSON as specified in your system prompt."""
+Generate trading signals for the screener candidates above (top {SCREENER_TOP_N}).
+Skip pairs with open positions. If a candidate's suggested direction is SHORT but
+its pair is NOT in the Shortable set, downgrade to NEUTRAL.
+Return JSON as specified in your system prompt."""
 
         result = await self.think_json(
             [{"role": "user", "content": prompt}]
@@ -175,7 +201,6 @@ Skip pairs with open positions. Return JSON as specified in your system prompt."
             await self._on_chat(msg)
 
     async def _on_chat(self, msg: AtlasMessage) -> None:
-        ctx = await self.build_shared_context()
         response = await self.think(
             [{"role": "user", "content": msg.payload.get("content", "")}],
             system=PERSONALITY + f"\n\nCurrent market regime: {await self.load_memory('current_regime')}",

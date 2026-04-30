@@ -143,7 +143,7 @@ Generate a complete, production-ready Freqtrade strategy. Respond in JSON."""
         async with get_session() as sess:
             await sess.execute(text("""
                 UPDATE backtests SET
-                    status = :status, results = :res::jsonb,
+                    status = :status, results = CAST(:res AS jsonb),
                     sharpe_ratio = :sharpe, max_drawdown = :dd,
                     total_return = :ret, win_rate = :wr,
                     completed_at = now()
@@ -158,8 +158,8 @@ Generate a complete, production-ready Freqtrade strategy. Respond in JSON."""
                 "id": backtest_id,
             })
             await sess.execute(text("""
-                UPDATE strategies SET backtest_results = :res::jsonb,
-                    performance_metrics = :metrics::jsonb, status = 'testing'
+                UPDATE strategies SET backtest_results = CAST(:res AS jsonb),
+                    performance_metrics = CAST(:metrics AS jsonb), status = 'testing'
                 WHERE id = :id
             """), {"res": json.dumps(bt_results), "metrics": json.dumps(metrics), "id": strategy_id})
             await sess.commit()
