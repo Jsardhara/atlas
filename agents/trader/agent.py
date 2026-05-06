@@ -2,12 +2,12 @@
 import asyncio
 import logging
 
+from shared.alpaca_client import AlpacaClient
 from shared.base_agent import BaseAgent
 from shared.config import get_settings
-from shared.kraken_client import KrakenClient
 from shared.protocols import AgentID, AtlasMessage, MessageType
 
-from .kraken_executor import KrakenExecutor
+from .alpaca_executor import AlpacaExecutor
 
 logger = logging.getLogger(__name__)
 
@@ -29,8 +29,8 @@ class TraderAgent(BaseAgent):
 
     def __init__(self, settings):
         super().__init__(settings)
-        kraken = KrakenClient(settings)
-        self.executor = KrakenExecutor(kraken, settings)
+        alpaca = AlpacaClient(settings)
+        self.executor = AlpacaExecutor(alpaca, settings)
 
     async def _run_loop(self) -> None:
         await asyncio.sleep(45)
@@ -54,7 +54,7 @@ class TraderAgent(BaseAgent):
         await self.emit_status(f"Monitoring {len(open_trades)} open position(s)")
 
         for trade in open_trades:
-            ticker = await self.executor.kraken.get_ticker(trade.pair.replace("/", ""))
+            ticker = await self.executor.alpaca.get_ticker(trade.pair)
             if not ticker:
                 continue
 

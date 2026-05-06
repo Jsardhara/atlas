@@ -21,7 +21,13 @@ class Settings(BaseSettings):
     # Jarvis ↔ Atlas auth
     atlas_bearer_token: str = ""
 
-    # Kraken
+    # Alpaca (broker)
+    alpaca_api_key: str = ""
+    alpaca_secret_key: str = ""
+    alpaca_paper: bool = True
+    alpaca_data_feed: str = "iex"  # iex | sip — sip needs paid subscription
+
+    # Kraken (deprecated — kept for migration window so old WIP still imports)
     kraken_api_key: str = ""
     kraken_api_secret: str = ""
     kraken_use_demo: bool = True

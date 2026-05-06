@@ -11,7 +11,7 @@ import math
 from dataclasses import dataclass, field
 from typing import Literal
 
-from .data_sources.kraken_market import PairInfo, fetch_ohlc
+from .data_sources.alpaca_market import PairInfo, fetch_ohlc
 
 logger = logging.getLogger(__name__)
 

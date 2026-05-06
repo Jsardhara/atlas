@@ -12,7 +12,7 @@ from shared.db import get_session
 from shared.protocols import AgentID, AtlasMessage, MessageType
 
 from .data_sources.freqtrade import FreqtradeClient
-from .data_sources.kraken_market import discover_universe
+from .data_sources.alpaca_market import discover_universe
 from .data_sources.news import fetch_cryptopanic, fetch_fear_and_greed, fetch_rss_headlines
 from .screener import DEFAULT_TOP_N, screen_universe
 
