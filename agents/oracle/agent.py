@@ -73,7 +73,7 @@ class OracleAgent(BaseAgent):
         await self.emit_status("Starting research cycle")
 
         # Stage 1 — universe + cheap screener (no LLM)
-        await self.emit_status("Discovering Kraken USD universe")
+        await self.emit_status("Discovering Alpaca tradable universe")
         universe = await discover_universe()
         candidates = await screen_universe(universe, top_n=SCREENER_TOP_N)
         candidate_pairs = [c.pair for c in candidates] or [info.wsname for info in universe[:4]]
@@ -110,7 +110,7 @@ class OracleAgent(BaseAgent):
 ### Screener Top Candidates (Stage 1, pre-LLM)
 {chr(10).join(screener_lines) if screener_lines else "(no screener output — fallback to candidate_pairs)"}
 
-### Shortable Pairs (margin-eligible on Kraken)
+### Shortable symbols (margin-eligible on Alpaca)
 {shortable_set}
 
 

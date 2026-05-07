@@ -1,8 +1,7 @@
 """Redis Streams message bus — fan-out to all agent consumer groups."""
 import asyncio
-import json
 import logging
-from typing import AsyncIterator, Callable
+from typing import Callable
 
 import redis.asyncio as aioredis
 

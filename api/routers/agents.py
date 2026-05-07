@@ -9,7 +9,7 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from sqlalchemy import text
 
-from ..dependencies import get_db, get_redis
+from ..dependencies import get_db
 
 router = APIRouter(prefix="/agents", tags=["agents"])
 

@@ -3,7 +3,6 @@ from __future__ import annotations
 
 from types import SimpleNamespace
 
-import pytest
 
 from guardian.validators.hard_rules import (
     check_leverage_cap,

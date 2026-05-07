@@ -4,7 +4,7 @@
 # - Sources `.env` for ATLAS_BEARER_TOKEN
 # - Hits /system/health on local API
 # - Verifies /agents reports 5 agents in state=running
-# - Pings Kraken public SystemStatus endpoint
+# - Pings Alpaca public clock endpoint
 # - Prints PASS/FAIL summary; exits 0 on full pass, 1 otherwise.
 
 set -u
@@ -81,23 +81,21 @@ else
     record "/agents endpoint" "FAIL" "(no response)"
 fi
 
-# 4) Kraken public — no auth needed
-kraken_body="$(curl -fsS -m 5 https://api.kraken.com/0/public/SystemStatus 2>/dev/null || true)"
-if [[ -n "$kraken_body" ]] && printf '%s' "$kraken_body" | grep -q '"status"'; then
-    kraken_status="$(printf '%s' "$kraken_body" \
+# 4) Alpaca public clock — no auth needed for clock endpoint via paper API
+alpaca_body="$(curl -fsS -m 5 https://paper-api.alpaca.markets/v2/clock \
+    -H "APCA-API-KEY-ID: ${ALPACA_API_KEY:-}" \
+    -H "APCA-API-SECRET-KEY: ${ALPACA_SECRET_KEY:-}" 2>/dev/null || true)"
+if [[ -n "$alpaca_body" ]] && printf '%s' "$alpaca_body" | grep -q '"is_open"'; then
+    alpaca_open="$(printf '%s' "$alpaca_body" \
         | python -c 'import json,sys
 try:
-    print(json.load(sys.stdin).get("result",{}).get("status","unknown"))
+    print(json.load(sys.stdin).get("is_open"))
 except Exception:
     print("parse_error")
 ' 2>/dev/null)"
-    if [[ "$kraken_status" == "online" ]]; then
-        record "kraken public" "PASS" "(status=online)"
-    else
-        record "kraken public" "FAIL" "(status=${kraken_status})"
-    fi
+    record "alpaca clock" "PASS" "(is_open=${alpaca_open})"
 else
-    record "kraken public" "FAIL" "(no response)"
+    record "alpaca clock" "FAIL" "(no response or auth failed)"
 fi
 
 # Summary

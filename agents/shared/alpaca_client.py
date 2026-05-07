@@ -1,17 +1,15 @@
 """Alpaca REST API wrapper using alpaca-py.
 
-Drop-in replacement for KrakenClient. Same coroutine-shaped surface, same
-return shapes (Kraken-style dicts) so the existing Trader / Oracle code
-keeps working through the migration.
+Coroutine-shaped surface used by Trader and Oracle. Return shapes are
+flat dicts so callers stay broker-agnostic.
 
 Pairs are normalized to Alpaca symbols on the way in:
     "BTC/USD" → crypto symbol "BTC/USD"
     "AAPL"    → equity symbol "AAPL"
-    "BTCUSD"  → crypto symbol "BTC/USD" (back-compat with Kraken altname)
+    "BTCUSD"  → crypto symbol "BTC/USD" (legacy altname)
 
 Paper vs live is controlled by Settings.alpaca_paper. Settings.live_trading_enabled
-still gates real submission — when off, orders are submitted with extended_hours=False
-to a paper account, which is the Alpaca equivalent of Kraken's validate=True.
+gates real submission — when off, orders are submitted to the paper account.
 """
 from __future__ import annotations
 
@@ -98,7 +96,7 @@ class AlpacaClient:
     async def get_balance(self) -> dict[str, float]:
         """Return cash + position-level balances keyed by asset symbol.
 
-        Mirrors Kraken's flat dict shape so callers don't change.
+        Flat dict shape: ``{"USD": cash, "<SYM>": qty, ...}``.
         """
         if not self._trading:
             return {}
@@ -143,11 +141,11 @@ class AlpacaClient:
         leverage: int = 1,  # noqa: ARG002 — Alpaca handles margin server-side
         validate: bool = True,
     ) -> dict[str, Any]:
-        """Place an order. Returns Kraken-shaped dict so KrakenExecutor keeps working.
+        """Place an order. Returns flat dict ``{txid, descr, ...}``.
 
-        ``validate=True`` (Kraken's dry-run) maps to Alpaca paper-only — we just
-        skip submission entirely and return a fake txid. When ``validate=False``
-        AND ``live_trading_enabled`` AND alpaca_paper=False, hits the live broker.
+        ``validate=True`` is a dry-run — we skip submission entirely and return a
+        synthetic txid. When ``validate=False`` AND ``live_trading_enabled`` AND
+        ``alpaca_paper=False``, hits the live broker.
         """
         if not self._trading:
             return {"error": "Alpaca client not available"}
@@ -159,7 +157,7 @@ class AlpacaClient:
         symbol, asset_class = _normalize_symbol(pair)
 
         if validate:
-            # Kraken-style dry-run: log intent, return synthetic txid.
+            # Dry-run: log intent, return synthetic txid.
             fake_id = f"paper-{datetime.now(timezone.utc).timestamp():.0f}"
             logger.info(
                 "Order dry-run: %s %s vol=%s asset=%s id=%s",
@@ -217,10 +215,10 @@ class AlpacaClient:
             logger.error("Alpaca cancel_order error: %s", exc)
             return {"error": str(exc)}
 
-    # ── Market data (Kraken-shaped) ──────────────────────────────────────
+    # ── Market data ──────────────────────────────────────────────────────
 
     async def get_asset_pairs(self) -> dict:
-        """Return {alpaca_symbol: {altname, base, quote, shortable}} — Kraken-shape.
+        """Return ``{alpaca_symbol: {altname, base, quote, shortable, ...}}``.
 
         Used by Guardian for shortable check + universe discovery.
         """
@@ -261,7 +259,7 @@ class AlpacaClient:
             return {}
 
     async def get_ticker(self, pair: str) -> dict:
-        """Return Kraken-shape ticker: {'c': [last_price, ...], ...}.
+        """Return ticker dict ``{'c': [last_price, ...], ...}``.
 
         Callers index ``ticker.get("c", [0])[0]`` so we honor that layout.
         """
@@ -318,7 +316,6 @@ class AlpacaClient:
                 CryptoBarsRequest,
                 StockBarsRequest,
             )
-            from alpaca.data.timeframe import TimeFrame, TimeFrameUnit
 
             tf = _parse_timeframe(timeframe)
             end = datetime.now(timezone.utc)
@@ -367,7 +364,7 @@ class AlpacaClient:
             return []
 
     async def get_trade_history(self, start: int | None = None) -> list[dict]:
-        """Closed orders, newest first. Kraken-shape minimal projection."""
+        """Closed orders, newest first. Minimal flat-dict projection."""
         if not self._trading:
             return []
         try:

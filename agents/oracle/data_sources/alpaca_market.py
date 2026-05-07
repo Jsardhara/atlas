@@ -1,8 +1,7 @@
 """Alpaca public market data — universe discovery + OHLC bars.
 
-Replaces ``kraken_market.py``. Same public surface (``PairInfo``,
-``discover_universe``, ``fetch_ohlc``, ``clear_cache``) so Oracle
-``agent.py`` and ``screener.py`` keep working without callsite churn.
+Public surface: ``PairInfo``, ``discover_universe``, ``fetch_ohlc``,
+``clear_cache`` — consumed by Oracle ``agent.py`` and ``screener.py``.
 
 Requires ``ALPACA_API_KEY`` + ``ALPACA_SECRET_KEY`` in env. The data
 clients fall back to public IEX feed when keys are missing — bars still
@@ -28,8 +27,8 @@ OHLC_TTL_SEC = 60
 class PairInfo:
     """Snapshot of a tradable symbol's metadata.
 
-    Fields kept Kraken-shaped so existing callers in `screener.py` don't
-    care which broker provided them. ``leverage_buy`` / ``leverage_sell``
+    Fields kept broker-agnostic so callers in `screener.py` don't care
+    which data source provided them. ``leverage_buy`` / ``leverage_sell``
     are derived from Alpaca's marginable / shortable booleans.
     """
 
@@ -190,10 +189,10 @@ async def discover_universe(force_refresh: bool = False) -> list[PairInfo]:
     return pairs
 
 
-def _bars_dataframe_to_kraken_bars(df: Any, symbol: str) -> list[list[float]]:
-    """Convert alpaca-py multi-index DataFrame → Kraken-shaped list-of-lists.
+def _bars_dataframe_to_ohlc(df: Any, symbol: str) -> list[list[float]]:
+    """Convert alpaca-py multi-index DataFrame → OHLC list-of-lists.
 
-    Kraken bar shape: [time, open, high, low, close, vwap, volume, count]
+    Bar shape: [time, open, high, low, close, vwap, volume, count]
     """
     if df is None or df.empty:
         return []
@@ -221,7 +220,7 @@ async def fetch_ohlc(
 ) -> list[list[float]]:
     """Fetch OHLC bars for `pair`. Cached 60s when `since` is None.
 
-    ``interval`` is in minutes (Kraken-shape). Returns Kraken-shaped bars.
+    ``interval`` is in minutes. Returns OHLC bars (see ``_bars_dataframe_to_ohlc``).
     """
     cache_key = (pair, interval)
     if since is None:
@@ -269,14 +268,14 @@ async def fetch_ohlc(
             )
             bars = await asyncio.to_thread(_crypto_data_client().get_crypto_bars, req)
 
-        kraken_bars = _bars_dataframe_to_kraken_bars(bars.df, symbol)
+        ohlc_bars = _bars_dataframe_to_ohlc(bars.df, symbol)
     except Exception as exc:
         logger.error("Alpaca fetch_ohlc error for %s: %s", pair, exc)
         return []
 
     if since is None:
-        _cache.ohlc[cache_key] = (time.monotonic(), kraken_bars)
-    return kraken_bars
+        _cache.ohlc[cache_key] = (time.monotonic(), ohlc_bars)
+    return ohlc_bars
 
 
 def clear_cache() -> None:

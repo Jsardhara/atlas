@@ -1,11 +1,7 @@
 """Trader Alpaca execution layer — places and monitors orders.
 
-Drop-in replacement for ``kraken_executor.KrakenExecutor``. Same public
-methods (``size_position``, ``execute_trade``, ``close_trade``) and same
-return shapes; only the broker call changes.
-
-DB column ``broker_order_id`` is broker-agnostic. The legacy ``kraken_order_id``
-column is kept readable but new rows write to ``broker_order_id`` only.
+Public methods: ``size_position``, ``execute_trade``, ``close_trade``.
+DB column ``broker_order_id`` is broker-agnostic.
 """
 from __future__ import annotations
 
@@ -60,7 +56,7 @@ class AlpacaExecutor:
         self.settings = settings
 
     async def size_position(self, signal: dict) -> dict:
-        """Kelly + confidence-based leverage. Same math as Kraken executor."""
+        """Kelly + confidence-based leverage."""
         async with get_session() as sess:
             snap = await sess.execute(text(
                 "SELECT total_usd FROM portfolio_snapshots ORDER BY snapshot_at DESC LIMIT 1"

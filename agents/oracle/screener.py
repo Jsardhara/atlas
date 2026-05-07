@@ -32,7 +32,7 @@ DEFAULT_MIN_VOLUME_USD_24H = 500_000.0
 DEFAULT_INTERVAL_MIN = 5
 DEFAULT_BARS_NEEDED = 60  # last 5h at 5m interval
 
-# Bar columns from Kraken OHLC: [time, open, high, low, close, vwap, volume, count]
+# Bar columns from OHLC source: [time, open, high, low, close, vwap, volume, count]
 COL_TIME = 0
 COL_OPEN = 1
 COL_HIGH = 2
@@ -224,7 +224,7 @@ async def screen_universe(
 ) -> list[Candidate]:
     """Score `pairs`, drop low-liquidity, return top `top_n` by abs(score)."""
     candidates: list[Candidate] = []
-    # Sequential to respect 1 RPS limit (kraken_market enforces gap globally).
+    # Sequential — alpaca_market enforces rate-limit gap globally.
     for info in pairs:
         cand = await _score_one(info, interval, min_volume_usd_24h)
         if cand is not None:
@@ -241,7 +241,7 @@ async def screen_universe_parallel(
     interval: int = DEFAULT_INTERVAL_MIN,
     concurrency: int = 1,
 ) -> list[Candidate]:
-    """Concurrent variant — kraken_market still enforces global 1 RPS, so concurrency
+    """Concurrent variant — alpaca_market still enforces global rate-limit, so concurrency
     >1 only helps if rate-limit gets relaxed."""
     sem = asyncio.Semaphore(concurrency)
 
