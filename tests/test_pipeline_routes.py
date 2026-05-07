@@ -139,6 +139,42 @@ def test_trader_execute_validates_mode(app_and_redis: tuple[FastAPI, FakeRedis])
     assert res.status_code == 422  # pydantic regex mismatch
 
 
+def test_trader_execute_rejects_auto_live(
+    app_and_redis: tuple[FastAPI, FakeRedis],
+) -> None:
+    """Live mode must never accept auto=True. Hard safety belt."""
+    app, _ = app_and_redis
+    client = TestClient(app)
+    res = client.post(
+        "/pipeline/trader-execute",
+        json={"signal_id": "s-1", "mode": "live", "auto": True},
+    )
+    assert res.status_code == 403
+    body = res.json()
+    assert body["status"] == "rejected"
+    assert body["reason"] == "live_requires_operator_confirmation"
+
+
+def test_trader_execute_passes_auto_paper(
+    app_and_redis: tuple[FastAPI, FakeRedis], monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Paper + auto=True flows through the normal pipeline."""
+    app, redis = app_and_redis
+    monkeypatch.setattr(pipeline_router, "DEFAULT_TIMEOUT_SEC", 0.2)
+    client = TestClient(app)
+    res = client.post(
+        "/pipeline/trader-execute",
+        json={"signal_id": "s-2", "mode": "paper", "auto": True},
+    )
+    # Will time out since no reply seeded — but request itself must be accepted.
+    assert res.status_code == 202
+    msgs = redis._streams.get("atlas:events", [])
+    assert msgs
+    payload = json.loads(msgs[0][1]["json"])
+    assert payload["payload"]["auto"] is True
+    assert payload["payload"]["mode"] == "paper"
+
+
 def test_sage_review_accepts_idempotency_key(
     app_and_redis: tuple[FastAPI, FakeRedis],
 ) -> None:
