@@ -1,0 +1,183 @@
+{
+  "nodes": [
+    {"id": "layout_RootLayout", "label": "Root Layout", "file_type": "code", "source_file": "dashboard/src/app/layout.tsx", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "page_Overview", "label": "Overview Page", "file_type": "code", "source_file": "dashboard/src/app/page.tsx", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "agents_page_AgentsPage", "label": "Agents Page", "file_type": "code", "source_file": "dashboard/src/app/agents/page.tsx", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "agent_id_page_AgentDetailPage", "label": "Agent Detail Page", "file_type": "code", "source_file": "dashboard/src/app/agents/[id]/page.tsx", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "portfolio_page_PortfolioPage", "label": "Portfolio Page", "file_type": "code", "source_file": "dashboard/src/app/portfolio/page.tsx", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "strategies_page_StrategiesPage", "label": "Strategies Page", "file_type": "code", "source_file": "dashboard/src/app/strategies/page.tsx", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "terminal_page_TerminalPage", "label": "Terminal Page", "file_type": "code", "source_file": "dashboard/src/app/terminal/page.tsx", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "trades_page_TradesPage", "label": "Trades Page", "file_type": "code", "source_file": "dashboard/src/app/trades/page.tsx", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "AgentCard", "label": "AgentCard Component", "file_type": "code", "source_file": "dashboard/src/components/agents/AgentCard.tsx", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "AgentChat", "label": "AgentChat Component", "file_type": "code", "source_file": "dashboard/src/components/agents/AgentChat.tsx", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "AlertBanner", "label": "AlertBanner Component", "file_type": "code", "source_file": "dashboard/src/components/shared/AlertBanner.tsx", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "Sidebar", "label": "Sidebar Component", "file_type": "code", "source_file": "dashboard/src/components/shared/Sidebar.tsx", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "WSProvider", "label": "WSProvider Component", "file_type": "code", "source_file": "dashboard/src/components/shared/WSProvider.tsx", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "MasterTerminal", "label": "MasterTerminal Component", "file_type": "code", "source_file": "dashboard/src/components/terminal/MasterTerminal.tsx", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "useWebSocket", "label": "useWebSocket Hook", "file_type": "code", "source_file": "dashboard/src/hooks/useWebSocket.ts", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "api_lib", "label": "API Client Library", "file_type": "code", "source_file": "dashboard/src/lib/api.ts", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "useAtlasStore", "label": "Atlas Zustand Store", "file_type": "code", "source_file": "dashboard/src/store/index.ts", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "WSMessage_type", "label": "WSMessage Type", "file_type": "code", "source_file": "dashboard/src/hooks/useWebSocket.ts", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "Agent_type", "label": "Agent Type", "file_type": "code", "source_file": "dashboard/src/lib/api.ts", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "AgentDetail_type", "label": "AgentDetail Type", "file_type": "code", "source_file": "dashboard/src/lib/api.ts", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "Trade_type", "label": "Trade Type", "file_type": "code", "source_file": "dashboard/src/lib/api.ts", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "TradeStats_type", "label": "TradeStats Type", "file_type": "code", "source_file": "dashboard/src/lib/api.ts", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "Portfolio_type", "label": "Portfolio Type", "file_type": "code", "source_file": "dashboard/src/lib/api.ts", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "PortfolioSnapshot_type", "label": "PortfolioSnapshot Type", "file_type": "code", "source_file": "dashboard/src/lib/api.ts", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "Strategy_type", "label": "Strategy Type", "file_type": "code", "source_file": "dashboard/src/lib/api.ts", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "StrategyDetail_type", "label": "StrategyDetail Type", "file_type": "code", "source_file": "dashboard/src/lib/api.ts", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "Alert_type", "label": "Alert Type", "file_type": "code", "source_file": "dashboard/src/lib/api.ts", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "PaperReadiness_type", "label": "PaperReadiness Type", "file_type": "code", "source_file": "dashboard/src/lib/api.ts", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "readme_ATLAS", "label": "ATLAS System README", "file_type": "document", "source_file": "README.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "readme_PaperTradingMode", "label": "Paper Trading Mode (Safety Concept)", "file_type": "document", "source_file": "README.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "readme_TradingPipeline", "label": "Oracle-Guardian-Trader Signal Pipeline", "file_type": "document", "source_file": "README.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "readme_SafetyLimits", "label": "Safety Limits (Risk Controls)", "file_type": "document", "source_file": "README.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "readme_AgentRoles", "label": "Six Agent Roles", "file_type": "document", "source_file": "README.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "readme_LiveTradingReadiness", "label": "Live Trading Readiness Gate", "file_type": "document", "source_file": "README.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "supervisor_CommanderPrompt", "label": "Commander Supervisor Prompt", "file_type": "document", "source_file": "agents/commander/prompts/supervisor.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "supervisor_EscalationTriggers", "label": "Commander Escalation Triggers", "file_type": "document", "source_file": "agents/commander/prompts/supervisor.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "supervisor_CircuitBreaker", "label": "Circuit Breaker / Agent Pause Logic", "file_type": "document", "source_file": "agents/commander/prompts/supervisor.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "supervisor_DecisionFormat", "label": "Commander JSON Decision Format", "file_type": "document", "source_file": "agents/commander/prompts/supervisor.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "agents_requirements", "label": "Agents Python Requirements", "file_type": "document", "source_file": "agents/requirements.txt", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "api_requirements", "label": "API Python Requirements", "file_type": "document", "source_file": "api/requirements.txt", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "WS_URL_config", "label": "WebSocket URL Config (NEXT_PUBLIC_WS_URL)", "file_type": "code", "source_file": "dashboard/src/hooks/useWebSocket.ts", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "API_URL_config", "label": "API URL Config (NEXT_PUBLIC_API_URL)", "file_type": "code", "source_file": "dashboard/src/lib/api.ts", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "AgentAtRouting", "label": "@agent Routing Syntax", "file_type": "code", "source_file": "dashboard/src/components/terminal/MasterTerminal.tsx", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "reconnect_logic", "label": "WebSocket Auto-Reconnect (3s backoff)", "file_type": "code", "source_file": "dashboard/src/hooks/useWebSocket.ts", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "live_event_feed", "label": "Live Event Feed (recentEvents ring buffer)", "file_type": "code", "source_file": "dashboard/src/store/index.ts", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null},
+    {"id": "paper_readiness_check", "label": "Paper-to-Live Readiness Thresholds", "file_type": "code", "source_file": "dashboard/src/app/page.tsx", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}
+  ],
+  "edges": [
+    {"source": "layout_RootLayout", "target": "WSProvider", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/app/layout.tsx", "source_location": null, "weight": 1.0},
+    {"source": "layout_RootLayout", "target": "Sidebar", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/app/layout.tsx", "source_location": null, "weight": 1.0},
+    {"source": "layout_RootLayout", "target": "AlertBanner", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/app/layout.tsx", "source_location": null, "weight": 1.0},
+
+    {"source": "page_Overview", "target": "api_lib", "relation": "calls", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/app/page.tsx", "source_location": null, "weight": 1.0},
+    {"source": "page_Overview", "target": "useAtlasStore", "relation": "calls", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/app/page.tsx", "source_location": null, "weight": 1.0},
+    {"source": "page_Overview", "target": "AgentCard", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/app/page.tsx", "source_location": null, "weight": 1.0},
+    {"source": "page_Overview", "target": "TradeStats_type", "relation": "shares_data_with", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/app/page.tsx", "source_location": null, "weight": 1.0},
+    {"source": "page_Overview", "target": "PaperReadiness_type", "relation": "shares_data_with", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/app/page.tsx", "source_location": null, "weight": 1.0},
+    {"source": "page_Overview", "target": "paper_readiness_check", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/app/page.tsx", "source_location": null, "weight": 1.0},
+
+    {"source": "agents_page_AgentsPage", "target": "api_lib", "relation": "calls", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/app/agents/page.tsx", "source_location": null, "weight": 1.0},
+    {"source": "agents_page_AgentsPage", "target": "AgentCard", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/app/agents/page.tsx", "source_location": null, "weight": 1.0},
+
+    {"source": "agent_id_page_AgentDetailPage", "target": "api_lib", "relation": "calls", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/app/agents/[id]/page.tsx", "source_location": null, "weight": 1.0},
+    {"source": "agent_id_page_AgentDetailPage", "target": "AgentChat", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/app/agents/[id]/page.tsx", "source_location": null, "weight": 1.0},
+    {"source": "agent_id_page_AgentDetailPage", "target": "AgentDetail_type", "relation": "shares_data_with", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/app/agents/[id]/page.tsx", "source_location": null, "weight": 1.0},
+
+    {"source": "portfolio_page_PortfolioPage", "target": "api_lib", "relation": "calls", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/app/portfolio/page.tsx", "source_location": null, "weight": 1.0},
+    {"source": "portfolio_page_PortfolioPage", "target": "Portfolio_type", "relation": "shares_data_with", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/app/portfolio/page.tsx", "source_location": null, "weight": 1.0},
+    {"source": "portfolio_page_PortfolioPage", "target": "PortfolioSnapshot_type", "relation": "shares_data_with", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/app/portfolio/page.tsx", "source_location": null, "weight": 1.0},
+
+    {"source": "strategies_page_StrategiesPage", "target": "api_lib", "relation": "calls", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/app/strategies/page.tsx", "source_location": null, "weight": 1.0},
+    {"source": "strategies_page_StrategiesPage", "target": "Strategy_type", "relation": "shares_data_with", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/app/strategies/page.tsx", "source_location": null, "weight": 1.0},
+    {"source": "strategies_page_StrategiesPage", "target": "StrategyDetail_type", "relation": "shares_data_with", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/app/strategies/page.tsx", "source_location": null, "weight": 1.0},
+
+    {"source": "terminal_page_TerminalPage", "target": "MasterTerminal", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/app/terminal/page.tsx", "source_location": null, "weight": 1.0},
+
+    {"source": "trades_page_TradesPage", "target": "api_lib", "relation": "calls", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/app/trades/page.tsx", "source_location": null, "weight": 1.0},
+    {"source": "trades_page_TradesPage", "target": "useAtlasStore", "relation": "calls", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/app/trades/page.tsx", "source_location": null, "weight": 1.0},
+    {"source": "trades_page_TradesPage", "target": "useWebSocket", "relation": "calls", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/app/trades/page.tsx", "source_location": null, "weight": 1.0},
+    {"source": "trades_page_TradesPage", "target": "Trade_type", "relation": "shares_data_with", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/app/trades/page.tsx", "source_location": null, "weight": 1.0},
+
+    {"source": "AgentCard", "target": "api_lib", "relation": "calls", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/components/agents/AgentCard.tsx", "source_location": null, "weight": 1.0},
+    {"source": "AgentCard", "target": "useAtlasStore", "relation": "calls", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/components/agents/AgentCard.tsx", "source_location": null, "weight": 1.0},
+    {"source": "AgentCard", "target": "Agent_type", "relation": "shares_data_with", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/components/agents/AgentCard.tsx", "source_location": null, "weight": 1.0},
+
+    {"source": "AgentChat", "target": "useWebSocket", "relation": "calls", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/components/agents/AgentChat.tsx", "source_location": null, "weight": 1.0},
+    {"source": "AgentChat", "target": "api_lib", "relation": "calls", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/components/agents/AgentChat.tsx", "source_location": null, "weight": 1.0},
+    {"source": "AgentChat", "target": "WSMessage_type", "relation": "shares_data_with", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/components/agents/AgentChat.tsx", "source_location": null, "weight": 1.0},
+
+    {"source": "AlertBanner", "target": "useAtlasStore", "relation": "calls", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/components/shared/AlertBanner.tsx", "source_location": null, "weight": 1.0},
+    {"source": "AlertBanner", "target": "Alert_type", "relation": "shares_data_with", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/components/shared/AlertBanner.tsx", "source_location": null, "weight": 1.0},
+
+    {"source": "Sidebar", "target": "useAtlasStore", "relation": "calls", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/components/shared/Sidebar.tsx", "source_location": null, "weight": 1.0},
+
+    {"source": "WSProvider", "target": "useWebSocket", "relation": "calls", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/components/shared/WSProvider.tsx", "source_location": null, "weight": 1.0},
+    {"source": "WSProvider", "target": "useAtlasStore", "relation": "calls", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/components/shared/WSProvider.tsx", "source_location": null, "weight": 1.0},
+    {"source": "WSProvider", "target": "WSMessage_type", "relation": "shares_data_with", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/components/shared/WSProvider.tsx", "source_location": null, "weight": 1.0},
+
+    {"source": "MasterTerminal", "target": "useWebSocket", "relation": "calls", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/components/terminal/MasterTerminal.tsx", "source_location": null, "weight": 1.0},
+    {"source": "MasterTerminal", "target": "useAtlasStore", "relation": "calls", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/components/terminal/MasterTerminal.tsx", "source_location": null, "weight": 1.0},
+    {"source": "MasterTerminal", "target": "api_lib", "relation": "calls", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/components/terminal/MasterTerminal.tsx", "source_location": null, "weight": 1.0},
+    {"source": "MasterTerminal", "target": "AgentAtRouting", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/components/terminal/MasterTerminal.tsx", "source_location": null, "weight": 1.0},
+
+    {"source": "useWebSocket", "target": "WSMessage_type", "relation": "shares_data_with", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/hooks/useWebSocket.ts", "source_location": null, "weight": 1.0},
+    {"source": "useWebSocket", "target": "reconnect_logic", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/hooks/useWebSocket.ts", "source_location": null, "weight": 1.0},
+    {"source": "useWebSocket", "target": "WS_URL_config", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/hooks/useWebSocket.ts", "source_location": null, "weight": 1.0},
+
+    {"source": "api_lib", "target": "API_URL_config", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/lib/api.ts", "source_location": null, "weight": 1.0},
+    {"source": "api_lib", "target": "Agent_type", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/lib/api.ts", "source_location": null, "weight": 1.0},
+    {"source": "api_lib", "target": "Trade_type", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/lib/api.ts", "source_location": null, "weight": 1.0},
+    {"source": "api_lib", "target": "Portfolio_type", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/lib/api.ts", "source_location": null, "weight": 1.0},
+    {"source": "api_lib", "target": "Alert_type", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/lib/api.ts", "source_location": null, "weight": 1.0},
+
+    {"source": "useAtlasStore", "target": "Agent_type", "relation": "shares_data_with", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/store/index.ts", "source_location": null, "weight": 1.0},
+    {"source": "useAtlasStore", "target": "Alert_type", "relation": "shares_data_with", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/store/index.ts", "source_location": null, "weight": 1.0},
+    {"source": "useAtlasStore", "target": "WSMessage_type", "relation": "shares_data_with", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/store/index.ts", "source_location": null, "weight": 1.0},
+    {"source": "useAtlasStore", "target": "live_event_feed", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "dashboard/src/store/index.ts", "source_location": null, "weight": 1.0},
+
+    {"source": "readme_ATLAS", "target": "readme_AgentRoles", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "README.md", "source_location": null, "weight": 1.0},
+    {"source": "readme_ATLAS", "target": "readme_TradingPipeline", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "README.md", "source_location": null, "weight": 1.0},
+    {"source": "readme_ATLAS", "target": "readme_SafetyLimits", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "README.md", "source_location": null, "weight": 1.0},
+    {"source": "readme_ATLAS", "target": "readme_PaperTradingMode", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "README.md", "source_location": null, "weight": 1.0},
+    {"source": "readme_ATLAS", "target": "readme_LiveTradingReadiness", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "README.md", "source_location": null, "weight": 1.0},
+
+    {"source": "supervisor_CommanderPrompt", "target": "supervisor_EscalationTriggers", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "agents/commander/prompts/supervisor.md", "source_location": null, "weight": 1.0},
+    {"source": "supervisor_CommanderPrompt", "target": "supervisor_CircuitBreaker", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "agents/commander/prompts/supervisor.md", "source_location": null, "weight": 1.0},
+    {"source": "supervisor_CommanderPrompt", "target": "supervisor_DecisionFormat", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "agents/commander/prompts/supervisor.md", "source_location": null, "weight": 1.0},
+    {"source": "supervisor_CommanderPrompt", "target": "readme_TradingPipeline", "relation": "conceptually_related_to", "confidence": "INFERRED", "confidence_score": 0.95, "source_file": "agents/commander/prompts/supervisor.md", "source_location": null, "weight": 0.95},
+
+    {"source": "readme_SafetyLimits", "target": "supervisor_EscalationTriggers", "relation": "conceptually_related_to", "confidence": "INFERRED", "confidence_score": 0.9, "source_file": "README.md", "source_location": null, "weight": 0.9},
+    {"source": "readme_SafetyLimits", "target": "supervisor_CircuitBreaker", "relation": "conceptually_related_to", "confidence": "INFERRED", "confidence_score": 0.9, "source_file": "README.md", "source_location": null, "weight": 0.9},
+
+    {"source": "paper_readiness_check", "target": "readme_LiveTradingReadiness", "relation": "implements", "confidence": "INFERRED", "confidence_score": 0.95, "source_file": "dashboard/src/app/page.tsx", "source_location": null, "weight": 0.95},
+    {"source": "readme_PaperTradingMode", "target": "paper_readiness_check", "relation": "conceptually_related_to", "confidence": "INFERRED", "confidence_score": 0.9, "source_file": "README.md", "source_location": null, "weight": 0.9},
+
+    {"source": "AgentChat", "target": "MasterTerminal", "relation": "semantically_similar_to", "confidence": "INFERRED", "confidence_score": 0.85, "source_file": "dashboard/src/components/agents/AgentChat.tsx", "source_location": null, "weight": 0.85},
+
+    {"source": "WSProvider", "target": "AlertBanner", "relation": "shares_data_with", "confidence": "INFERRED", "confidence_score": 0.9, "source_file": "dashboard/src/components/shared/WSProvider.tsx", "source_location": null, "weight": 0.9},
+    {"source": "WSProvider", "target": "AgentCard", "relation": "shares_data_with", "confidence": "INFERRED", "confidence_score": 0.85, "source_file": "dashboard/src/components/shared/WSProvider.tsx", "source_location": null, "weight": 0.85},
+
+    {"source": "Sidebar", "target": "trades_page_TradesPage", "relation": "references", "confidence": "INFERRED", "confidence_score": 0.8, "source_file": "dashboard/src/components/shared/Sidebar.tsx", "source_location": null, "weight": 0.8},
+    {"source": "Sidebar", "target": "portfolio_page_PortfolioPage", "relation": "references", "confidence": "INFERRED", "confidence_score": 0.8, "source_file": "dashboard/src/components/shared/Sidebar.tsx", "source_location": null, "weight": 0.8},
+    {"source": "Sidebar", "target": "strategies_page_StrategiesPage", "relation": "references", "confidence": "INFERRED", "confidence_score": 0.8, "source_file": "dashboard/src/components/shared/Sidebar.tsx", "source_location": null, "weight": 0.8},
+    {"source": "Sidebar", "target": "terminal_page_TerminalPage", "relation": "references", "confidence": "INFERRED", "confidence_score": 0.8, "source_file": "dashboard/src/components/shared/Sidebar.tsx", "source_location": null, "weight": 0.8},
+
+    {"source": "agents_requirements", "target": "api_requirements", "relation": "conceptually_related_to", "confidence": "INFERRED", "confidence_score": 0.75, "source_file": "agents/requirements.txt", "source_location": null, "weight": 0.75},
+
+    {"source": "AgentAtRouting", "target": "supervisor_CommanderPrompt", "relation": "conceptually_related_to", "confidence": "INFERRED", "confidence_score": 0.8, "source_file": "dashboard/src/components/terminal/MasterTerminal.tsx", "source_location": null, "weight": 0.8}
+  ],
+  "hyperedges": [
+    {
+      "id": "ws_realtime_pipeline",
+      "label": "WebSocket Real-Time Event Pipeline (useWebSocket → useAtlasStore → UI components)",
+      "nodes": ["useWebSocket", "WSProvider", "useAtlasStore", "AlertBanner", "AgentCard", "MasterTerminal"],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "dashboard/src/components/shared/WSProvider.tsx"
+    },
+    {
+      "id": "agent_chat_pattern",
+      "label": "Agent Chat Pattern (AgentChat + MasterTerminal share session-ID chat over WS + REST)",
+      "nodes": ["AgentChat", "MasterTerminal", "useWebSocket", "api_lib"],
+      "relation": "implement",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.92,
+      "source_file": "dashboard/src/components/agents/AgentChat.tsx"
+    },
+    {
+      "id": "paper_to_live_gate",
+      "label": "Paper-to-Live Trading Gate (PaperReadiness thresholds gate live trading enablement)",
+      "nodes": ["paper_readiness_check", "readme_LiveTradingReadiness", "readme_PaperTradingMode", "readme_SafetyLimits"],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "README.md"
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

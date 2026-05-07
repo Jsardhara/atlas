@@ -6,7 +6,6 @@ import uuid
 
 
 class AgentID(str, Enum):
-    COMMANDER = "commander"
     ORACLE = "oracle"
     GUARDIAN = "guardian"
     TRADER = "trader"
@@ -46,11 +45,11 @@ class MessageType(str, Enum):
     BACKTEST_STARTED = "backtest_started"
     BACKTEST_COMPLETE = "backtest_complete"
 
-    # Commander outputs
-    AGENT_COMMAND = "agent_command"       # pause/resume/configure another agent
-    ALERT_CREATED = "alert_created"
-    ALERT_RESOLVED = "alert_resolved"
-    PIPELINE_DECISION = "pipeline_decision"  # advance/block a signal
+    # Orchestrator-service outputs (emitted by api/pipeline_orchestrator.py,
+    # not an LLM agent). PIPELINE_DECISION advances/blocks signals at Guardian;
+    # AGENT_COMMAND pauses/resumes/configures a running agent.
+    AGENT_COMMAND = "agent_command"
+    PIPELINE_DECISION = "pipeline_decision"
 
     # User / system
     USER_COMMAND = "user_command"

@@ -1,7 +1,6 @@
 """OpenRouter client — OpenAI-compatible API with retry and cost tracking."""
 import asyncio
 import logging
-import time
 from typing import AsyncIterator
 
 import httpx

@@ -20,3 +20,7 @@ async def get_db(request: Request):
         raise RuntimeError("DB not initialised")
     async with _session_factory() as session:
         yield session
+
+
+def get_redis(request: Request):
+    return request.app.state.redis

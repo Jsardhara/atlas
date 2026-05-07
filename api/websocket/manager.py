@@ -1,5 +1,4 @@
 """WebSocket connection manager — broadcasts all Atlas events to dashboard clients."""
-import asyncio
 import logging
 from typing import Any
 
