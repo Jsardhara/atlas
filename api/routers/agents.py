@@ -83,7 +83,7 @@ async def chat_with_agent(agent_id: str, body: ChatRequest, request: Request):
     async with get_db(request) as sess:
         await sess.execute(text("""
             INSERT INTO chat_messages (session_id, role, agent_id, content)
-            VALUES (:sid::uuid, 'user', :agent, :content)
+            VALUES (CAST(:sid AS uuid), 'user', :agent, :content)
         """), {"sid": session_id, "agent": agent_id, "content": body.content})
         await sess.commit()
 
