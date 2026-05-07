@@ -49,17 +49,13 @@ class Settings(BaseSettings):
     glassnode_api_key: str = ""
     fred_api_key: str = ""
 
-    # Tauric / TradingAgents (debate-driven analysis layer over Oracle)
-    tauric_enabled: bool = True
-    tauric_llm_provider: str = "openrouter"
-    tauric_deep_llm: str = "anthropic/claude-opus-4-7"
-    tauric_quick_llm: str = "anthropic/claude-haiku-4-5-20251001"
-    tauric_max_debate_rounds: int = 1
-    tauric_max_risk_rounds: int = 1
-    tauric_max_recur_limit: int = 25
-    tauric_reasoning_effort: str = "medium"  # low | medium | high | max
-    tauric_daily_budget_usd: float = 5.0  # hard cap; skip propagate if hit
-    tauric_per_call_budget_usd: float = 0.50  # per-ticker estimated ceiling
+    # Native bull/bear/judge debate (replaces Tauric — runs on Claude Code subscription)
+    debate_enabled: bool = True
+    debate_analyst_model: str = "claude-sonnet-4-6"
+    debate_judge_model: str = "claude-opus-4-7"
+    debate_top_n: int = 3  # only debate the top N screener candidates per cycle
+    debate_daily_budget_usd: float = 5.0  # informational cap (subscription-billed)
+    debate_per_call_budget_usd: float = 0.50  # per-ticker estimated ceiling
 
     model_config = {"env_file": ".env", "extra": "ignore"}
 
