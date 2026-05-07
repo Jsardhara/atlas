@@ -169,7 +169,10 @@ async def get_strategy_weights(request: Request) -> dict:
         return {"weights": {}, "count": 0}
     try:
         weights = json.loads(raw)
-    except (ValueError, TypeError):
+    except (ValueError, TypeError) as exc:
+        logger.warning(
+            "control.strategy_weights stored value is not valid JSON: %s", exc
+        )
         weights = {}
     return {"weights": weights, "count": len(weights)}
 
