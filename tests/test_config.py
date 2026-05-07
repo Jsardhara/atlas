@@ -53,7 +53,11 @@ def test_openrouter_api_key_removed() -> None:
 
 
 def test_max_leverage_preserved() -> None:
-    """Trading safety knobs unchanged by the LLM swap."""
-    settings = Settings()
+    """Trading safety knobs unchanged by the LLM swap.
+
+    Pass ``_env_file=None`` so the test asserts hard-coded defaults rather
+    than whatever the operator has in their local ``.env``.
+    """
+    settings = Settings(_env_file=None)
     assert settings.max_leverage == 5
     assert settings.live_trading_enabled is False

@@ -191,3 +191,106 @@ async def test_size_position_long_high_confidence(monkeypatch, fake_alpaca, sett
     sizing = await executor.size_position(signal)
     assert sizing["leverage"] >= 2
     assert sizing["leverage"] <= settings.max_leverage
+
+
+# --- fractional-short rounding ---
+
+class _FakeAlpacaPriced:
+    def __init__(self, price: float):
+        self._price = price
+        self.place_order = AsyncMock(return_value={"txid": ["ALPACA-FAKE-X"]})
+
+    async def get_ticker(self, pair: str):
+        return {"c": [str(self._price)]}
+
+
+async def test_execute_short_rounds_fractional_to_one_share(settings, patched_db):
+    """qty < 1 on SHORT must round up to 1 (Alpaca rejects fractional shorts).
+
+    Sizing $300 / price $510 = 0.59 shares → fractional. 1-share notional
+    $510 stays within 2x sizing cap ($600), so rounding to 1 is allowed.
+    """
+    fake = _FakeAlpacaPriced(price=510.0)
+    executor = AlpacaExecutor(fake, settings)
+    signal = {
+        "pair": "TMO",
+        "direction": "SHORT",
+        "confidence": 0.7,
+        "entry_price": 510.0,
+        "signal_id": "00000000-0000-0000-0000-000000000010",
+        "stop_loss": 530.0,
+        "take_profit": 460.0,
+    }
+    sizing = {"size_usd": 300.0, "leverage": 2}
+
+    result = await executor.execute_trade(signal, sizing)
+    fake.place_order.assert_awaited_once()
+    kwargs = fake.place_order.await_args.kwargs
+    assert kwargs["side"] == "sell"
+    assert kwargs["volume"] == 1.0  # rounded up
+    assert result.get("rejected") is not True
+
+
+async def test_execute_short_skips_when_one_share_exceeds_2x_sizing(settings, patched_db):
+    """If 1-share notional > 2x Kelly size, skip cleanly."""
+    # $30 sizing × 2x cap = $60 max. NVDA $900/share blows past it.
+    fake = _FakeAlpacaPriced(price=900.0)
+    executor = AlpacaExecutor(fake, settings)
+    signal = {
+        "pair": "NVDA",
+        "direction": "SHORT",
+        "confidence": 0.7,
+        "entry_price": 900.0,
+        "signal_id": "00000000-0000-0000-0000-000000000011",
+        "stop_loss": 945.0,
+        "take_profit": 810.0,
+    }
+    sizing = {"size_usd": 30.0, "leverage": 2}
+
+    result = await executor.execute_trade(signal, sizing)
+    fake.place_order.assert_not_called()
+    assert result.get("rejected") is True
+    assert "1-share cost" in result.get("error", "")
+
+
+async def test_execute_short_keeps_fractional_for_crypto_pair(settings, patched_db):
+    """Crypto pairs (slash in symbol) keep fractional sizing — no Alpaca short rule."""
+    fake = _FakeAlpacaPriced(price=70000.0)
+    executor = AlpacaExecutor(fake, settings)
+    signal = {
+        "pair": "BTC/USD",
+        "direction": "SHORT",
+        "confidence": 0.7,
+        "entry_price": 70000.0,
+        "signal_id": "00000000-0000-0000-0000-000000000012",
+        "stop_loss": 73500.0,
+        "take_profit": 63000.0,
+    }
+    sizing = {"size_usd": 100.0, "leverage": 2}
+
+    await executor.execute_trade(signal, sizing)
+    fake.place_order.assert_awaited_once()
+    kwargs = fake.place_order.await_args.kwargs
+    assert kwargs["volume"] == round(100.0 / 70000.0, 6)  # fractional preserved
+
+
+async def test_execute_long_keeps_fractional(settings, patched_db):
+    """Fractional rule does NOT apply to LONG — fractional buys are fine on Alpaca."""
+    fake = _FakeAlpacaPriced(price=510.0)
+    executor = AlpacaExecutor(fake, settings)
+    signal = {
+        "pair": "TMO",
+        "direction": "LONG",
+        "confidence": 0.7,
+        "entry_price": 510.0,
+        "signal_id": "00000000-0000-0000-0000-000000000013",
+        "stop_loss": 485.0,
+        "take_profit": 545.0,
+    }
+    sizing = {"size_usd": 50.0, "leverage": 1}
+
+    await executor.execute_trade(signal, sizing)
+    fake.place_order.assert_awaited_once()
+    kwargs = fake.place_order.await_args.kwargs
+    assert kwargs["side"] == "buy"
+    assert kwargs["volume"] == round(50.0 / 510.0, 6)  # fractional preserved
