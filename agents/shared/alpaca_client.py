@@ -217,6 +217,31 @@ class AlpacaClient:
 
     # ── Market data ──────────────────────────────────────────────────────
 
+    async def get_asset(self, symbol: str) -> dict:
+        """Return live attributes for one symbol: tradable, shortable,
+        easy_to_borrow, marginable, fractionable. Empty dict on failure.
+
+        Live (not cached) — Alpaca refreshes ETB nightly so callers should
+        re-check before each SHORT submission.
+        """
+        if not self._trading:
+            return {}
+        try:
+            import asyncio
+            asset = await asyncio.to_thread(self._trading.get_asset, symbol)
+            return {
+                "symbol": asset.symbol,
+                "tradable": bool(asset.tradable),
+                "shortable": bool(getattr(asset, "shortable", False)),
+                "easy_to_borrow": bool(getattr(asset, "easy_to_borrow", False)),
+                "marginable": bool(getattr(asset, "marginable", False)),
+                "fractionable": bool(getattr(asset, "fractionable", False)),
+                "asset_class": str(asset.asset_class).split(".")[-1].lower(),
+            }
+        except Exception as exc:
+            logger.error("Alpaca get_asset(%s) error: %s", symbol, exc)
+            return {}
+
     async def get_asset_pairs(self) -> dict:
         """Return ``{alpaca_symbol: {altname, base, quote, shortable, ...}}``.
 
