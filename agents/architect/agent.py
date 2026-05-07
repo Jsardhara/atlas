@@ -130,7 +130,7 @@ Generate a complete, production-ready Freqtrade strategy. Respond in JSON."""
         async with get_session() as sess:
             bt_row = await sess.execute(text("""
                 INSERT INTO backtests (strategy_id, triggered_by, timerange, status)
-                VALUES (:sid::uuid, 'architect', '20240101-', 'running')
+                VALUES (CAST(:sid AS uuid), 'architect', '20240101-', 'running')
                 RETURNING id
             """), {"sid": strategy_id})
             backtest_id = str(bt_row.fetchone()[0])
