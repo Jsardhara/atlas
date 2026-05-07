@@ -110,7 +110,6 @@ CREATE TABLE trades (
     id                UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     signal_id         UUID REFERENCES signals(id),
     broker_order_id   TEXT UNIQUE,
-    kraken_order_id   TEXT,                  -- legacy, retained read-only for old rows
     pair              TEXT NOT NULL,
     side              TEXT NOT NULL,        -- buy | sell
     order_type        TEXT NOT NULL,        -- market | limit

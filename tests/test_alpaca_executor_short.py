@@ -1,7 +1,4 @@
-"""Verify Alpaca executor handles SHORT direction correctly.
-
-Mirrors test_kraken_executor_short.py — same scenarios, alpaca executor.
-"""
+"""Verify Alpaca executor handles SHORT direction correctly."""
 from __future__ import annotations
 
 from types import SimpleNamespace

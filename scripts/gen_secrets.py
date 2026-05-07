@@ -1,8 +1,8 @@
 """Generate Atlas secrets idempotently.
 
-Reads ``.env.example`` keys, copies any missing keys into ``.env`` (without
-clobbering existing values — Kraken keys etc. stay put), and fills in random
-hex values for the four secrets that must never be human-typed:
+Copies any missing keys into ``.env`` (without clobbering existing values —
+broker keys etc. stay put), and fills in random hex values for the four
+secrets that must never be human-typed:
 
 - ``POSTGRES_PASSWORD``      (32 bytes)
 - ``JWT_SECRET_KEY``         (64 bytes)

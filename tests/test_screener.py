@@ -4,9 +4,8 @@ from __future__ import annotations
 import pytest
 
 from oracle import screener
-from oracle.data_sources.kraken_market import PairInfo
+from oracle.data_sources.alpaca_market import PairInfo
 from oracle.screener import (
-    Candidate,
     LONG_THRESHOLD,
     SHORT_THRESHOLD,
     _atr,

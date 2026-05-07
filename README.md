@@ -31,7 +31,7 @@ A multi-agent AI trading system that researches markets, validates risk, execute
           │    (FreqAI)       │
           └─────────┬────────┘
                     │
-              Kraken Exchange
+              Alpaca Brokerage
 ```
 
 ### Agents
@@ -41,7 +41,7 @@ A multi-agent AI trading system that researches markets, validates risk, execute
 | **Commander** | Orchestrates all agents; enforces circuit breakers and escalation rules |
 | **Oracle** | Researches news, sentiment, and on-chain signals every 15 minutes |
 | **Guardian** | Hard-rule risk validator — blocks any trade that violates limits |
-| **Trader** | Executes orders on Kraken using Kelly criterion position sizing |
+| **Trader** | Executes orders on Alpaca using Kelly criterion position sizing |
 | **Sage** | Analyzes trade patterns and feeds learnings back to the system |
 | **Architect** | Generates and backtests new strategies using Freqtrade/FreqAI |
 
@@ -51,7 +51,7 @@ A multi-agent AI trading system that researches markets, validates risk, execute
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) (with Compose v2)
 - [Git](https://git-scm.com/)
-- A [Kraken](https://www.kraken.com/) account (free demo mode works)
+- An [Alpaca](https://alpaca.markets/) account (free paper-trading account works)
 - An [OpenRouter](https://openrouter.ai/) API key (free tier works)
 
 ---
@@ -67,18 +67,18 @@ cd atlas
 
 ### 2. Configure your environment
 
-```bash
-cp .env.example .env
-```
-
-Open `.env` and fill in:
+Create `.env` at the repo root and fill in:
 
 ```env
 OPENROUTER_API_KEY=sk-or-...       # from openrouter.ai — free models work
-KRAKEN_API_KEY=your_key            # from Kraken > Security > API
-KRAKEN_API_SECRET=your_secret
-KRAKEN_USE_DEMO=true               # keep true to paper-trade only
+ALPACA_API_KEY=PK...               # from app.alpaca.markets > Profile > API Keys
+ALPACA_SECRET_KEY=...
+ALPACA_PAPER=true                  # keep true to paper-trade only
+ALPACA_DATA_FEED=iex               # iex (free) | sip (paid)
 ```
+
+Run `python scripts/gen_secrets.py` to fill the four random secrets
+(POSTGRES_PASSWORD, JWT_SECRET_KEY, API_ADMIN_PASSWORD, ATLAS_BEARER_TOKEN).
 
 Everything else has safe defaults. Change passwords before exposing to the internet.
 
@@ -168,7 +168,7 @@ Guardian enforces these as hard rules — trades that violate them are blocked, 
 
 **Only do this when you are confident in paper-trading results.**
 
-1. Set `KRAKEN_USE_DEMO=false` in `.env`
+1. Set `ALPACA_PAPER=false` in `.env` (and ensure your Alpaca account is funded)
 2. Set `LIVE_TRADING_ENABLED=true` in `.env`
 3. Set conservative limits (`DAILY_LOSS_LIMIT_USD`, `MAX_PORTFOLIO_RISK_PCT`)
 4. Restart: `docker compose up -d`
@@ -226,7 +226,7 @@ atlas/
 │   ├── trader/        # Trade execution agent
 │   ├── sage/          # Learning and pattern analysis agent
 │   ├── architect/     # Strategy generation and backtesting agent
-│   └── shared/        # Shared base class, DB, Kraken client, OpenRouter client
+│   └── shared/        # Shared base class, DB, Alpaca client, OpenRouter client
 ├── api/               # FastAPI backend
 │   ├── routers/       # REST endpoints
 │   └── websocket/     # Real-time WebSocket gateway
@@ -240,7 +240,7 @@ atlas/
 │   ├── postgres/      # Database schema
 │   └── redis/         # Cache config
 ├── docker-compose.yml
-├── .env.example       # Copy to .env and fill in secrets
+├── .env               # Local secrets (gitignored)
 └── scripts/setup.sh   # One-time setup helper
 ```
 
@@ -255,7 +255,7 @@ atlas/
 → Check `docker compose logs agent-commander` — usually a missing API key or DB not ready.
 
 **Trades not executing**  
-→ Confirm `LIVE_TRADING_ENABLED=true` and `KRAKEN_USE_DEMO=false` in `.env`, then restart.
+→ Confirm `LIVE_TRADING_ENABLED=true` and `ALPACA_PAPER=false` in `.env`, then restart.
 
 **System health shows red**  
 → Visit `http://localhost:8000/system/health` to see which check is failing.

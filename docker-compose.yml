@@ -69,8 +69,8 @@ services:
       - ./infra/freqtrade/strategies:/freqtrade/user_data/strategies
     env_file: .env
     environment:
-      - KRAKEN_API_KEY=${KRAKEN_API_KEY}
-      - KRAKEN_API_SECRET=${KRAKEN_API_SECRET}
+      - ALPACA_API_KEY=${ALPACA_API_KEY}
+      - ALPACA_SECRET_KEY=${ALPACA_SECRET_KEY}
     command: >
       trade
       --config /freqtrade/user_data/config.json

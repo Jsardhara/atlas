@@ -27,11 +27,6 @@ class Settings(BaseSettings):
     alpaca_paper: bool = True
     alpaca_data_feed: str = "iex"  # iex | sip — sip needs paid subscription
 
-    # Kraken (deprecated — kept for migration window so old WIP still imports)
-    kraken_api_key: str = ""
-    kraken_api_secret: str = ""
-    kraken_use_demo: bool = True
-
     # Database
     database_url: str = "postgresql+asyncpg://atlas:atlas_secure_pw_2026@postgres:5432/atlas"
 
