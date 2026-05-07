@@ -11,7 +11,6 @@ from shared.config import get_settings
 from shared.db import get_session
 from shared.protocols import AgentID, AtlasMessage, MessageType
 
-from .data_sources.freqtrade import FreqtradeClient
 from .data_sources.alpaca_market import discover_universe
 from .data_sources.debate import fetch_debate_signals_batch
 from .data_sources.news import fetch_cryptopanic, fetch_fear_and_greed, fetch_rss_headlines
@@ -69,14 +68,6 @@ class OracleAgent(BaseAgent):
     model_env_key = "agent_oracle_model"
     personality = PERSONALITY
 
-    def __init__(self, settings):
-        super().__init__(settings)
-        self.freqtrade = FreqtradeClient(
-            settings.freqtrade_url,
-            settings.freqtrade_username,
-            settings.freqtrade_password,
-        )
-
     async def _run_loop(self) -> None:
         await asyncio.sleep(30)  # Let other services start
         while True:
@@ -128,12 +119,10 @@ class OracleAgent(BaseAgent):
 
         # Stage 2 — external context + LLM analyzes screener candidates
         await self.emit_status("Fetching market data")
-        news, rss, fng, ft_status, ft_perf, ctx = await asyncio.gather(
+        news, rss, fng, ctx = await asyncio.gather(
             fetch_cryptopanic(self.settings.cryptopanic_api_key, candidate_pairs),
             fetch_rss_headlines(),
             fetch_fear_and_greed(),
-            self.freqtrade.get_status(),
-            self.freqtrade.get_performance(),
             self.build_shared_context(),
         )
 
@@ -175,12 +164,6 @@ class OracleAgent(BaseAgent):
 
 ### Recent News Headlines
 {json.dumps((news + rss)[:20], indent=2)}
-
-### Freqtrade Bot Status (current open trades)
-{json.dumps(ft_status[:5], indent=2)}
-
-### Freqtrade Performance
-{json.dumps(ft_perf[:10], indent=2)}
 
 ### Current Open Positions (skip these pairs)
 {open_pairs}

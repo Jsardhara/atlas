@@ -1,7 +1,7 @@
 @echo off
 REM ============================================================================
 REM Atlas — host bring-up
-REM   1. Start infra (postgres + redis + freqtrade) in Docker
+REM   1. Start infra (postgres + redis) in Docker
 REM   2. Wait for postgres healthy
 REM   3. Launch API + 5 agents on host, each in its own console window
 REM ============================================================================
@@ -12,7 +12,7 @@ set "ATLAS_ROOT=%~dp0.."
 pushd "%ATLAS_ROOT%"
 
 echo [atlas] starting infra containers...
-docker compose up -d postgres redis freqtrade
+docker compose up -d postgres redis
 if errorlevel 1 (
     echo [atlas] docker compose up failed
     popd
