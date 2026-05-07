@@ -92,17 +92,17 @@ class GuardianAgent(BaseAgent):
         prompt = f"""Evaluate this trade signal for approval:
 
 ## Signal
-{json.dumps(signal, indent=2)}
+{json.dumps(signal, indent=2, default=str)}
 
 ## Portfolio Context
 Open positions: {len(ctx.get('open_positions', []))} / 3
-Portfolio: {json.dumps(ctx.get('portfolio', {}), indent=2)}
+Portfolio: {json.dumps(ctx.get('portfolio', {}), indent=2, default=str)}
 
 ## Recent Performance (7 days)
-{json.dumps(recent_perf, indent=2)}
+{json.dumps(recent_perf, indent=2, default=str)}
 
 ## Learning Insights from Sage
-{json.dumps(sage_insights, indent=2)}
+{json.dumps(sage_insights, indent=2, default=str)}
 
 Apply devil's advocate reasoning. What could go wrong? Is the risk/reward justified?
 Respond in JSON as specified in your system prompt."""
