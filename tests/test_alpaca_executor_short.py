@@ -253,8 +253,8 @@ async def test_execute_short_skips_when_one_share_exceeds_2x_sizing(settings, pa
     assert "1-share cost" in result.get("error", "")
 
 
-async def test_execute_short_keeps_fractional_for_crypto_pair(settings, patched_db):
-    """Crypto pairs (slash in symbol) keep fractional sizing — no Alpaca short rule."""
+async def test_execute_short_rejects_crypto_pair(settings, patched_db):
+    """Alpaca crypto is spot-only — SHORT must be rejected before submit."""
     fake = _FakeAlpacaPriced(price=70000.0)
     executor = AlpacaExecutor(fake, settings)
     signal = {
@@ -268,10 +268,52 @@ async def test_execute_short_keeps_fractional_for_crypto_pair(settings, patched_
     }
     sizing = {"size_usd": 100.0, "leverage": 2}
 
-    await executor.execute_trade(signal, sizing)
-    fake.place_order.assert_awaited_once()
-    kwargs = fake.place_order.await_args.kwargs
-    assert kwargs["volume"] == round(100.0 / 70000.0, 6)  # fractional preserved
+    result = await executor.execute_trade(signal, sizing)
+    fake.place_order.assert_not_called()
+    assert result.get("rejected") is True
+    assert "crypto" in result.get("error", "").lower()
+
+
+async def test_execute_short_skips_when_not_easy_to_borrow(settings, patched_db):
+    """Live ETB check — if Alpaca says easy_to_borrow=False, skip the SHORT."""
+
+    class _FakeAlpacaETB:
+        def __init__(self, price: float, etb: bool):
+            self._price = price
+            self._etb = etb
+            self.place_order = AsyncMock(return_value={"txid": ["X"]})
+
+        async def get_ticker(self, pair: str):
+            return {"c": [str(self._price)]}
+
+        async def get_asset(self, symbol: str):
+            return {
+                "symbol": symbol,
+                "tradable": True,
+                "shortable": True,
+                "easy_to_borrow": self._etb,
+                "marginable": True,
+                "fractionable": True,
+                "asset_class": "us_equity",
+            }
+
+    fake = _FakeAlpacaETB(price=120.0, etb=False)
+    executor = AlpacaExecutor(fake, settings)
+    signal = {
+        "pair": "GME",
+        "direction": "SHORT",
+        "confidence": 0.75,
+        "entry_price": 120.0,
+        "signal_id": "00000000-0000-0000-0000-000000000020",
+        "stop_loss": 130.0,
+        "take_profit": 100.0,
+    }
+    sizing = {"size_usd": 200.0, "leverage": 2}
+
+    result = await executor.execute_trade(signal, sizing)
+    fake.place_order.assert_not_called()
+    assert result.get("rejected") is True
+    assert "easy-to-borrow" in result.get("error", "").lower()
 
 
 async def test_execute_long_keeps_fractional(settings, patched_db):
