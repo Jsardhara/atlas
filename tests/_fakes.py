@@ -69,6 +69,23 @@ class FakeRedis:
                     removed += 1
             return removed
 
+    async def incrbyfloat(self, key: str, amount: float) -> str:
+        async with self._lock:
+            existing = self._kv.get(key)
+            current = float(existing[0]) if existing else 0.0
+            new_total = current + float(amount)
+            self._kv[key] = (str(new_total), None)
+            return str(new_total)
+
+    async def expire(self, key: str, ttl_sec: int) -> bool:
+        async with self._lock:
+            entry = self._kv.get(key)
+            if entry is None:
+                return False
+            value, _ = entry
+            self._kv[key] = (value, time.monotonic() + ttl_sec)
+            return True
+
     async def ping(self) -> bool:
         return True
 

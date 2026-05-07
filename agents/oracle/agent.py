@@ -14,7 +14,9 @@ from shared.protocols import AgentID, AtlasMessage, MessageType
 from .data_sources.freqtrade import FreqtradeClient
 from .data_sources.alpaca_market import discover_universe
 from .data_sources.news import fetch_cryptopanic, fetch_fear_and_greed, fetch_rss_headlines
+from .data_sources.tauric_signal import fetch_tauric_signals_batch
 from .screener import DEFAULT_TOP_N, screen_universe
+from shared.budget import BudgetTracker
 
 logger = logging.getLogger(__name__)
 
@@ -44,6 +46,19 @@ Only include signals with confidence >= 0.6."""
 
 SCAN_INTERVAL = 900  # 15 minutes
 SCREENER_TOP_N = DEFAULT_TOP_N
+TAURIC_TOP_N = 3  # only run debate on the top-3 screener candidates
+
+
+def _ticker_for_tauric(pair: str) -> str:
+    """Pull a tradeable ticker from a screener pair string.
+
+    Equities arrive as plain symbols (``AAPL``); crypto pairs use
+    ``BTC/USD``. Tauric expects equity-style strings — for crypto we send
+    the base asset alone and let the debate frame it as the underlying.
+    """
+    if "/" in pair:
+        return pair.split("/", 1)[0]
+    return pair
 
 
 class OracleAgent(BaseAgent):
@@ -83,6 +98,32 @@ class OracleAgent(BaseAgent):
             len(candidates), len(universe), len(shortable_set),
         )
 
+        # Stage 1b — Tauric debate over top screener picks (LLM-heavy, capped)
+        tauric_signals: dict[str, dict] = {}
+        if self.settings.tauric_enabled and candidates:
+            top_tickers = [
+                _ticker_for_tauric(c.pair) for c in candidates[:TAURIC_TOP_N]
+            ]
+            await self.emit_status(
+                f"Running Tauric debate on top {len(top_tickers)} candidates"
+            )
+            redis_client = getattr(self, "_redis", None)
+            budget = BudgetTracker(redis_client, key_prefix="atlas:budget:tauric")
+            try:
+                tauric_signals = await fetch_tauric_signals_batch(
+                    top_tickers,
+                    settings=self.settings,
+                    redis=redis_client,
+                    budget=budget,
+                )
+            except Exception as exc:  # noqa: BLE001 — Tauric is augment-only
+                logger.warning("[Oracle] Tauric batch failed (non-fatal): %s", exc)
+                tauric_signals = {}
+            logger.info(
+                "[Oracle] Tauric returned %d/%d signals",
+                len(tauric_signals), len(top_tickers),
+            )
+
         # Stage 2 — external context + LLM analyzes screener candidates
         await self.emit_status("Fetching market data")
         news, rss, fng, ft_status, ft_perf, ctx = await asyncio.gather(
@@ -105,10 +146,21 @@ class OracleAgent(BaseAgent):
             for c in candidates
         ]
 
+        tauric_lines = []
+        for tk, sig in tauric_signals.items():
+            debate = sig.get("debate_log", {})
+            tauric_lines.append(
+                f"- {tk}: decision={sig.get('decision')} winner={debate.get('winner')} "
+                f"bull={debate.get('bull','')[:160]!r} bear={debate.get('bear','')[:160]!r}"
+            )
+
         prompt = f"""Analyze current crypto market conditions and generate trading signals.
 
 ### Screener Top Candidates (Stage 1, pre-LLM)
 {chr(10).join(screener_lines) if screener_lines else "(no screener output — fallback to candidate_pairs)"}
+
+### Tauric Debate (Stage 1b — bull/bear analyst output, augment only)
+{chr(10).join(tauric_lines) if tauric_lines else "(tauric disabled or budget exhausted)"}
 
 ### Shortable symbols (margin-eligible on Alpaca)
 {shortable_set}
