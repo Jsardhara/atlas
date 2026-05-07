@@ -24,6 +24,7 @@ from .dependencies import init_db  # noqa: E402
 from .pipeline_orchestrator import PipelineOrchestrator  # noqa: E402
 from .routers import (  # noqa: E402
     agents,
+    control,
     cost,
     pipeline,
     portfolio,
@@ -94,5 +95,6 @@ app.include_router(strategies.router)
 app.include_router(terminal.router)
 app.include_router(system.router)
 app.include_router(pipeline.router)
+app.include_router(control.router)
 app.include_router(cost.router)
 app.include_router(ws_router)

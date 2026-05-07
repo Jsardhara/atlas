@@ -74,6 +74,14 @@ class GuardianCheckRequest(BaseModel):
 class TraderExecuteRequest(BaseModel):
     signal_id: str
     mode: str = Field(default="paper", pattern="^(paper|live)$")
+    auto: bool = Field(
+        default=False,
+        description=(
+            "True when Jarvis is firing without operator confirmation. "
+            "Rejected with HTTP 403 when mode=='live' (live trades require "
+            "explicit human approval)."
+        ),
+    )
 
 
 class SageReviewRequest(BaseModel):
@@ -272,6 +280,20 @@ async def trader_execute(
     request: Request,
     decision: IdempotencyDecision = Depends(idempotency_check),
 ) -> JSONResponse:
+    # Hard safety belt: live mode never accepts auto=True. Even if Jarvis
+    # tries to bypass operator confirmation, the API refuses.
+    if body.auto and body.mode == "live":
+        return JSONResponse(
+            status_code=403,
+            content={
+                "status": "rejected",
+                "reason": "live_requires_operator_confirmation",
+                "detail": (
+                    "auto=True is only valid for mode=paper. Live trades must "
+                    "be initiated with auto=False after human approval."
+                ),
+            },
+        )
     return await _run_pipeline_step(
         request,
         decision,
@@ -282,7 +304,11 @@ async def trader_execute(
             MessageType.POSITION_OPENED,
             MessageType.ORDER_FILLED,
         ],
-        payload={"signal_id": body.signal_id, "mode": body.mode},
+        payload={
+            "signal_id": body.signal_id,
+            "mode": body.mode,
+            "auto": body.auto,
+        },
     )
 
 

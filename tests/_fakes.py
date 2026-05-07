@@ -60,6 +60,15 @@ class FakeRedis:
             return None
         return self._kv[key][0]
 
+    async def delete(self, *keys: str) -> int:
+        async with self._lock:
+            removed = 0
+            for k in keys:
+                if k in self._kv:
+                    del self._kv[k]
+                    removed += 1
+            return removed
+
     async def ping(self) -> bool:
         return True
 
