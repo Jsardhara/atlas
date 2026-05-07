@@ -112,11 +112,33 @@ class AlpacaExecutor:
         pair = signal["pair"]
         direction = (signal.get("direction") or "").upper()
 
+        # Alpaca crypto is spot-only — shorting impossible regardless of
+        # ETB / margin status. Reject before contacting the broker.
+        if direction == "SHORT" and "/" in pair:
+            return {
+                "error": "SHORT rejected: alpaca crypto is spot-only (no shorting)",
+                "rejected": True,
+            }
+
         if direction == "SHORT" and shortable_set is not None:
             altname = pair.replace("/", "")
             if altname not in shortable_set and pair not in shortable_set:
                 return {
                     "error": f"SHORT rejected: {pair} not in shortable set",
+                    "rejected": True,
+                }
+
+        # Live ETB freshness check — borrow status flips overnight; cached
+        # universe data may be stale. Skip the live call for crypto (already
+        # bailed) and for LONG (irrelevant).
+        if direction == "SHORT" and hasattr(self.alpaca, "get_asset"):
+            asset = await self.alpaca.get_asset(pair)
+            if asset and not asset.get("easy_to_borrow", True):
+                logger.warning(
+                    "[Trader] SHORT %s skipped: not easy-to-borrow today", pair,
+                )
+                return {
+                    "error": f"SHORT rejected: {pair} not easy-to-borrow today",
                     "rejected": True,
                 }
 
