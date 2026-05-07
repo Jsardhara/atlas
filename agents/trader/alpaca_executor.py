@@ -134,6 +134,24 @@ class AlpacaExecutor:
             current_price = float(signal.get("entry_price") or 1.0)
         volume = sizing["size_usd"] / current_price if current_price else 0.001
 
+        # Alpaca rejects fractional SHORT orders ("fractional orders cannot be sold short").
+        # Round up to nearest whole share. If that pushes notional past 2x the
+        # Kelly-sized allocation, the trade is too expensive — skip cleanly so
+        # Guardian's risk envelope stays intact.
+        if side == "sell" and "/" not in pair and volume < 1.0:
+            requested_notional = sizing["size_usd"]
+            volume = 1.0
+            actual_notional = current_price
+            if actual_notional > requested_notional * 2:
+                logger.warning(
+                    "[Trader] SHORT %s skipped: 1-share notional $%.2f exceeds 2x sizing $%.2f",
+                    pair, actual_notional, requested_notional,
+                )
+                return {
+                    "error": f"SHORT skipped: 1-share cost ${actual_notional:.2f} > 2x sizing",
+                    "rejected": True,
+                }
+
         order_result = await self.alpaca.place_order(
             pair=pair,
             side=side,
