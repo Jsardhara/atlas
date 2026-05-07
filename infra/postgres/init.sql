@@ -33,12 +33,27 @@ CREATE TABLE agents (
 );
 
 INSERT INTO agents (id, display_name, model, personality) VALUES
-  ('commander', 'Commander', 'deepseek/deepseek-r1:free',      'Head supervisor. Speaks with authority and brevity. Escalates to human only when stakes exceed thresholds.'),
-  ('oracle',    'Oracle',    'google/gemini-2.0-flash-exp:free','Sharp, unemotional market analyst. Speaks in structured numbered points. Never hedges — uses confidence scores.'),
-  ('guardian',  'Guardian',  'deepseek/deepseek-r1:free',      'Risk-obsessed, skeptical validator. Lists risks first. Only approves trades that survive rigorous scrutiny.'),
-  ('trader',    'Trader',    'google/gemini-flash-1.5-8b:free', 'Cold and precise executor. Never second-guesses approved trades. Focuses on optimal order placement.'),
-  ('sage',      'Sage',      'meta-llama/llama-3.3-70b-instruct:free', 'Philosophical and methodical performance analyst. Looks for deep patterns. Speaks in paragraphs.'),
-  ('architect', 'Architect', 'qwen/qwen-2.5-coder-32b-instruct:free', 'Creative but rigorous strategy designer. Draws on academic research and quantitative finance. Writes complete working code.');
+  ('oracle',    'Oracle',    'claude-sonnet-4-6', 'Sharp, unemotional market analyst. Speaks in structured numbered points. Never hedges — uses confidence scores.'),
+  ('guardian',  'Guardian',  'claude-haiku-4-5',  'Risk-obsessed, skeptical validator. Lists risks first. Only approves trades that survive rigorous scrutiny.'),
+  ('trader',    'Trader',    'claude-sonnet-4-6', 'Cold and precise executor. Never second-guesses approved trades. Focuses on optimal order placement.'),
+  ('sage',      'Sage',      'claude-haiku-4-5',  'Philosophical and methodical performance analyst. Looks for deep patterns. Speaks in paragraphs.'),
+  ('architect', 'Architect', 'claude-opus-4-7',   'Creative but rigorous strategy designer. Draws on academic research and quantitative finance. Writes complete working code.');
+
+-- ---------------------------------------------------------------------------
+-- LLM call audit log (cost tracking parity with Jarvis).
+-- DDL kept in sync with agents/shared/claude_client._LLM_CALLS_DDL.
+-- ---------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS llm_calls (
+    id                 UUID PRIMARY KEY,
+    ts                 TIMESTAMPTZ NOT NULL DEFAULT now(),
+    agent_id           TEXT NOT NULL,
+    model              TEXT NOT NULL,
+    input_tokens       INTEGER NOT NULL DEFAULT 0,
+    output_tokens      INTEGER NOT NULL DEFAULT 0,
+    cost_usd_estimate  NUMERIC(12, 6) NOT NULL DEFAULT 0
+);
+CREATE INDEX IF NOT EXISTS llm_calls_agent_ts ON llm_calls(agent_id, ts DESC);
+CREATE INDEX IF NOT EXISTS llm_calls_ts ON llm_calls(ts DESC);
 
 -- ---------------------------------------------------------------------------
 -- Agent persistent memory (key-value per agent, cross-agent context sharing)
@@ -94,7 +109,7 @@ CREATE INDEX signals_pair_status ON signals(pair, status, created_at DESC);
 CREATE TABLE trades (
     id                UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     signal_id         UUID REFERENCES signals(id),
-    kraken_order_id   TEXT UNIQUE,
+    broker_order_id   TEXT UNIQUE,
     pair              TEXT NOT NULL,
     side              TEXT NOT NULL,        -- buy | sell
     order_type        TEXT NOT NULL,        -- market | limit

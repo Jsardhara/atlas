@@ -4,14 +4,13 @@ import json
 import logging
 import time
 from abc import ABC, abstractmethod
-from datetime import datetime
 
 from sqlalchemy import text
 
 from .config import Settings
 from .db import get_session, init_db
 from .message_bus import MessageBus
-from .openrouter_client import OpenRouterClient
+from .claude_client import ClaudeClient
 from .protocols import AgentID, AgentState, AtlasMessage, MessageType
 
 logger = logging.getLogger(__name__)
@@ -28,8 +27,7 @@ class BaseAgent(ABC):
         self.state = AgentState.STARTING
         self.model = getattr(settings, self.model_env_key)
         self.bus = MessageBus(settings.redis_url)
-        self.llm = OpenRouterClient(
-            api_key=settings.openrouter_api_key,
+        self.llm = ClaudeClient(
             model=self.model,
             agent_id=self.agent_id.value,
         )
@@ -127,9 +125,9 @@ class BaseAgent(ABC):
         async with get_session() as sess:
             await sess.execute(text("""
                 INSERT INTO agent_memory (agent_id, memory_key, value, updated_at)
-                VALUES (:agent, :key, :val::jsonb, now())
+                VALUES (:agent, :key, CAST(:val AS jsonb), now())
                 ON CONFLICT (agent_id, memory_key)
-                DO UPDATE SET value = :val::jsonb, updated_at = now()
+                DO UPDATE SET value = CAST(:val AS jsonb), updated_at = now()
             """), {"agent": self.agent_id.value, "key": key, "val": json.dumps(value)})
             await sess.commit()
 
@@ -155,7 +153,8 @@ class BaseAgent(ABC):
                 "SELECT total_usd, available_usd, realized_pnl, unrealized_pnl "
                 "FROM portfolio_snapshots ORDER BY snapshot_at DESC LIMIT 1"
             ))
-            portfolio = dict(snap.fetchone()._mapping) if snap.rowcount else {}
+            snap_row = snap.fetchone()
+            portfolio = dict(snap_row._mapping) if snap_row else {}
 
             # Sage insights
             sage_memory = await self.load_memory("latest_insights")

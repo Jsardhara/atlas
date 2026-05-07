@@ -1,0 +1,1109 @@
+{
+  "nodes": [
+    {
+      "id": "base_agent_BaseAgent",
+      "label": "BaseAgent",
+      "file_type": "code",
+      "source_file": "agents/shared/base_agent.py",
+      "source_location": "line 20",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "protocols_AgentID",
+      "label": "AgentID Enum",
+      "file_type": "code",
+      "source_file": "agents/shared/protocols.py",
+      "source_location": "line 8",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "protocols_MessageType",
+      "label": "MessageType Enum",
+      "file_type": "code",
+      "source_file": "agents/shared/protocols.py",
+      "source_location": "line 19",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "protocols_AtlasMessage",
+      "label": "AtlasMessage",
+      "file_type": "code",
+      "source_file": "agents/shared/protocols.py",
+      "source_location": "line 76",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "protocols_MarketSignal",
+      "label": "MarketSignal",
+      "file_type": "code",
+      "source_file": "agents/shared/protocols.py",
+      "source_location": "line 87",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "protocols_TradeDecision",
+      "label": "TradeDecision",
+      "file_type": "code",
+      "source_file": "agents/shared/protocols.py",
+      "source_location": "line 100",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "protocols_OrderParams",
+      "label": "OrderParams",
+      "file_type": "code",
+      "source_file": "agents/shared/protocols.py",
+      "source_location": "line 108",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "protocols_AgentState",
+      "label": "AgentState Enum",
+      "file_type": "code",
+      "source_file": "agents/shared/protocols.py",
+      "source_location": "line 69",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "protocols_AgentCommand",
+      "label": "AgentCommand Enum",
+      "file_type": "code",
+      "source_file": "agents/shared/protocols.py",
+      "source_location": "line 62",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "message_bus_MessageBus",
+      "label": "MessageBus",
+      "file_type": "code",
+      "source_file": "agents/shared/message_bus.py",
+      "source_location": "line 17",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "openrouter_client_OpenRouterClient",
+      "label": "OpenRouterClient",
+      "file_type": "code",
+      "source_file": "agents/shared/openrouter_client.py",
+      "source_location": "line 18",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "config_Settings",
+      "label": "Settings",
+      "file_type": "code",
+      "source_file": "agents/shared/config.py",
+      "source_location": "line 5",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "config_get_settings",
+      "label": "get_settings",
+      "file_type": "code",
+      "source_file": "agents/shared/config.py",
+      "source_location": "line 47",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "db_get_session",
+      "label": "get_session",
+      "file_type": "code",
+      "source_file": "agents/shared/db.py",
+      "source_location": "line 19",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "db_init_db",
+      "label": "init_db",
+      "file_type": "code",
+      "source_file": "agents/shared/db.py",
+      "source_location": "line 13",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "kraken_client_KrakenClient",
+      "label": "KrakenClient",
+      "file_type": "code",
+      "source_file": "agents/shared/kraken_client.py",
+      "source_location": "line 10",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "architect_agent_ArchitectAgent",
+      "label": "ArchitectAgent",
+      "file_type": "code",
+      "source_file": "agents/architect/agent.py",
+      "source_location": "line 43",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "backtest_runner_run_backtest",
+      "label": "run_backtest",
+      "file_type": "code",
+      "source_file": "agents/architect/backtest_runner.py",
+      "source_location": "line 12",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "backtest_runner_score_backtest",
+      "label": "score_backtest",
+      "file_type": "code",
+      "source_file": "agents/architect/backtest_runner.py",
+      "source_location": "line 49",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "commander_agent_CommanderAgent",
+      "label": "CommanderAgent",
+      "file_type": "code",
+      "source_file": "agents/commander/agent.py",
+      "source_location": "line 21",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "alert_manager_AlertManager",
+      "label": "AlertManager",
+      "file_type": "code",
+      "source_file": "agents/commander/alert_manager.py",
+      "source_location": "line 15",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "guardian_agent_GuardianAgent",
+      "label": "GuardianAgent",
+      "file_type": "code",
+      "source_file": "agents/guardian/agent.py",
+      "source_location": "line 34",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "hard_rules_validate_hard_rules",
+      "label": "validate_hard_rules",
+      "file_type": "code",
+      "source_file": "agents/guardian/validators/hard_rules.py",
+      "source_location": "line 15",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "hard_rules_ValidationResult",
+      "label": "ValidationResult",
+      "file_type": "code",
+      "source_file": "agents/guardian/validators/hard_rules.py",
+      "source_location": "line 9",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "oracle_agent_OracleAgent",
+      "label": "OracleAgent",
+      "file_type": "code",
+      "source_file": "agents/oracle/agent.py",
+      "source_location": "line 49",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "freqtrade_FreqtradeClient",
+      "label": "FreqtradeClient",
+      "file_type": "code",
+      "source_file": "agents/oracle/data_sources/freqtrade.py",
+      "source_location": "line 9",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "news_fetch_cryptopanic",
+      "label": "fetch_cryptopanic",
+      "file_type": "code",
+      "source_file": "agents/oracle/data_sources/news.py",
+      "source_location": "line 18",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "news_fetch_rss_headlines",
+      "label": "fetch_rss_headlines",
+      "file_type": "code",
+      "source_file": "agents/oracle/data_sources/news.py",
+      "source_location": "line 38",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "news_fetch_fear_and_greed",
+      "label": "fetch_fear_and_greed",
+      "file_type": "code",
+      "source_file": "agents/oracle/data_sources/news.py",
+      "source_location": "line 60",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sage_agent_SageAgent",
+      "label": "SageAgent",
+      "file_type": "code",
+      "source_file": "agents/sage/agent.py",
+      "source_location": "line 36",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "base_agent_build_shared_context",
+      "label": "build_shared_context",
+      "file_type": "code",
+      "source_file": "agents/shared/base_agent.py",
+      "source_location": "line 144",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "base_agent_save_memory",
+      "label": "save_memory",
+      "file_type": "code",
+      "source_file": "agents/shared/base_agent.py",
+      "source_location": "line 126",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "base_agent_load_memory",
+      "label": "load_memory",
+      "file_type": "code",
+      "source_file": "agents/shared/base_agent.py",
+      "source_location": "line 136",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "base_agent_think_json",
+      "label": "think_json",
+      "file_type": "code",
+      "source_file": "agents/shared/base_agent.py",
+      "source_location": "line 112",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "base_agent_think",
+      "label": "think",
+      "file_type": "code",
+      "source_file": "agents/shared/base_agent.py",
+      "source_location": "line 102",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_signal_pipeline",
+      "label": "Trading Signal Pipeline",
+      "file_type": "document",
+      "source_file": "agents/shared/protocols.py",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_agent_memory",
+      "label": "Agent Memory (agent_memory table)",
+      "file_type": "document",
+      "source_file": "agents/shared/base_agent.py",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_circuit_breaker",
+      "label": "Daily Loss Circuit Breaker",
+      "file_type": "document",
+      "source_file": "agents/guardian/validators/hard_rules.py",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_sage_insights",
+      "label": "Sage Insights (shared learning context)",
+      "file_type": "document",
+      "source_file": "agents/sage/agent.py",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_freqtrade_strategy",
+      "label": "Freqtrade Strategy (generated artifact)",
+      "file_type": "document",
+      "source_file": "agents/architect/agent.py",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "architect_agent_ArchitectAgent",
+      "target": "base_agent_BaseAgent",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/architect/agent.py",
+      "source_location": "line 43",
+      "weight": 1.0
+    },
+    {
+      "source": "commander_agent_CommanderAgent",
+      "target": "base_agent_BaseAgent",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/commander/agent.py",
+      "source_location": "line 21",
+      "weight": 1.0
+    },
+    {
+      "source": "guardian_agent_GuardianAgent",
+      "target": "base_agent_BaseAgent",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/guardian/agent.py",
+      "source_location": "line 34",
+      "weight": 1.0
+    },
+    {
+      "source": "oracle_agent_OracleAgent",
+      "target": "base_agent_BaseAgent",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/oracle/agent.py",
+      "source_location": "line 49",
+      "weight": 1.0
+    },
+    {
+      "source": "sage_agent_SageAgent",
+      "target": "base_agent_BaseAgent",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/sage/agent.py",
+      "source_location": "line 36",
+      "weight": 1.0
+    },
+    {
+      "source": "base_agent_BaseAgent",
+      "target": "message_bus_MessageBus",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/shared/base_agent.py",
+      "source_location": "line 31",
+      "weight": 1.0
+    },
+    {
+      "source": "base_agent_BaseAgent",
+      "target": "openrouter_client_OpenRouterClient",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/shared/base_agent.py",
+      "source_location": "line 31",
+      "weight": 1.0
+    },
+    {
+      "source": "base_agent_BaseAgent",
+      "target": "db_get_session",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/shared/base_agent.py",
+      "source_location": "line 128",
+      "weight": 1.0
+    },
+    {
+      "source": "base_agent_BaseAgent",
+      "target": "db_init_db",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/shared/base_agent.py",
+      "source_location": "line 42",
+      "weight": 1.0
+    },
+    {
+      "source": "base_agent_think",
+      "target": "openrouter_client_OpenRouterClient",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/shared/base_agent.py",
+      "source_location": "line 109",
+      "weight": 1.0
+    },
+    {
+      "source": "base_agent_think_json",
+      "target": "openrouter_client_OpenRouterClient",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/shared/base_agent.py",
+      "source_location": "line 113",
+      "weight": 1.0
+    },
+    {
+      "source": "architect_agent_ArchitectAgent",
+      "target": "backtest_runner_run_backtest",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/architect/agent.py",
+      "source_location": "line 140",
+      "weight": 1.0
+    },
+    {
+      "source": "architect_agent_ArchitectAgent",
+      "target": "backtest_runner_score_backtest",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/architect/agent.py",
+      "source_location": "line 141",
+      "weight": 1.0
+    },
+    {
+      "source": "backtest_runner_run_backtest",
+      "target": "concept_freqtrade_strategy",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/architect/backtest_runner.py",
+      "source_location": "line 18",
+      "weight": 1.0
+    },
+    {
+      "source": "architect_agent_ArchitectAgent",
+      "target": "concept_freqtrade_strategy",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/architect/agent.py",
+      "source_location": "line 96",
+      "weight": 1.0
+    },
+    {
+      "source": "architect_agent_ArchitectAgent",
+      "target": "concept_sage_insights",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/architect/agent.py",
+      "source_location": "line 62",
+      "weight": 1.0
+    },
+    {
+      "source": "commander_agent_CommanderAgent",
+      "target": "alert_manager_AlertManager",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/commander/agent.py",
+      "source_location": "line 29",
+      "weight": 1.0
+    },
+    {
+      "source": "alert_manager_AlertManager",
+      "target": "message_bus_MessageBus",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/commander/alert_manager.py",
+      "source_location": "line 43",
+      "weight": 1.0
+    },
+    {
+      "source": "alert_manager_AlertManager",
+      "target": "db_get_session",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/commander/alert_manager.py",
+      "source_location": "line 27",
+      "weight": 1.0
+    },
+    {
+      "source": "alert_manager_AlertManager",
+      "target": "protocols_AtlasMessage",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/commander/alert_manager.py",
+      "source_location": "line 43",
+      "weight": 1.0
+    },
+    {
+      "source": "guardian_agent_GuardianAgent",
+      "target": "hard_rules_validate_hard_rules",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/guardian/agent.py",
+      "source_location": "line 62",
+      "weight": 1.0
+    },
+    {
+      "source": "hard_rules_validate_hard_rules",
+      "target": "db_get_session",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/guardian/validators/hard_rules.py",
+      "source_location": "line 23",
+      "weight": 1.0
+    },
+    {
+      "source": "hard_rules_validate_hard_rules",
+      "target": "concept_circuit_breaker",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/guardian/validators/hard_rules.py",
+      "source_location": "line 40",
+      "weight": 1.0
+    },
+    {
+      "source": "hard_rules_validate_hard_rules",
+      "target": "hard_rules_ValidationResult",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/guardian/validators/hard_rules.py",
+      "source_location": "line 15",
+      "weight": 1.0
+    },
+    {
+      "source": "guardian_agent_GuardianAgent",
+      "target": "concept_sage_insights",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/guardian/agent.py",
+      "source_location": "line 69",
+      "weight": 1.0
+    },
+    {
+      "source": "oracle_agent_OracleAgent",
+      "target": "freqtrade_FreqtradeClient",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/oracle/agent.py",
+      "source_location": "line 57",
+      "weight": 1.0
+    },
+    {
+      "source": "oracle_agent_OracleAgent",
+      "target": "news_fetch_cryptopanic",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/oracle/agent.py",
+      "source_location": "line 78",
+      "weight": 1.0
+    },
+    {
+      "source": "oracle_agent_OracleAgent",
+      "target": "news_fetch_rss_headlines",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/oracle/agent.py",
+      "source_location": "line 79",
+      "weight": 1.0
+    },
+    {
+      "source": "oracle_agent_OracleAgent",
+      "target": "news_fetch_fear_and_greed",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/oracle/agent.py",
+      "source_location": "line 80",
+      "weight": 1.0
+    },
+    {
+      "source": "oracle_agent_OracleAgent",
+      "target": "concept_sage_insights",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/oracle/agent.py",
+      "source_location": "line 88",
+      "weight": 1.0
+    },
+    {
+      "source": "oracle_agent_OracleAgent",
+      "target": "concept_signal_pipeline",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "agents/oracle/agent.py",
+      "source_location": "line 144",
+      "weight": 0.9
+    },
+    {
+      "source": "sage_agent_SageAgent",
+      "target": "concept_sage_insights",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/sage/agent.py",
+      "source_location": "line 116",
+      "weight": 1.0
+    },
+    {
+      "source": "sage_agent_SageAgent",
+      "target": "base_agent_save_memory",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/sage/agent.py",
+      "source_location": "line 116",
+      "weight": 1.0
+    },
+    {
+      "source": "architect_agent_ArchitectAgent",
+      "target": "base_agent_load_memory",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/architect/agent.py",
+      "source_location": "line 62",
+      "weight": 1.0
+    },
+    {
+      "source": "oracle_agent_OracleAgent",
+      "target": "base_agent_save_memory",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/oracle/agent.py",
+      "source_location": "line 122",
+      "weight": 1.0
+    },
+    {
+      "source": "commander_agent_CommanderAgent",
+      "target": "concept_circuit_breaker",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/commander/agent.py",
+      "source_location": "line 64",
+      "weight": 1.0
+    },
+    {
+      "source": "commander_agent_CommanderAgent",
+      "target": "concept_signal_pipeline",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/commander/agent.py",
+      "source_location": "line 98",
+      "weight": 1.0
+    },
+    {
+      "source": "message_bus_MessageBus",
+      "target": "protocols_AtlasMessage",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/shared/message_bus.py",
+      "source_location": "line 34",
+      "weight": 1.0
+    },
+    {
+      "source": "message_bus_MessageBus",
+      "target": "protocols_AgentID",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/shared/message_bus.py",
+      "source_location": "line 14",
+      "weight": 1.0
+    },
+    {
+      "source": "base_agent_BaseAgent",
+      "target": "concept_agent_memory",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/shared/base_agent.py",
+      "source_location": "line 126",
+      "weight": 1.0
+    },
+    {
+      "source": "config_Settings",
+      "target": "kraken_client_KrakenClient",
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/shared/kraken_client.py",
+      "source_location": "line 13",
+      "weight": 1.0
+    },
+    {
+      "source": "config_Settings",
+      "target": "base_agent_BaseAgent",
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/shared/base_agent.py",
+      "source_location": "line 26",
+      "weight": 1.0
+    },
+    {
+      "source": "architect_agent_ArchitectAgent",
+      "target": "sage_agent_SageAgent",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/architect/agent.py",
+      "source_location": "line 62",
+      "weight": 0.9
+    },
+    {
+      "source": "oracle_agent_OracleAgent",
+      "target": "sage_agent_SageAgent",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "agents/oracle/agent.py",
+      "source_location": "line 88",
+      "weight": 0.85
+    },
+    {
+      "source": "guardian_agent_GuardianAgent",
+      "target": "sage_agent_SageAgent",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "agents/guardian/agent.py",
+      "source_location": "line 69",
+      "weight": 0.85
+    },
+    {
+      "source": "sage_agent_SageAgent",
+      "target": "oracle_agent_OracleAgent",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "agents/sage/agent.py",
+      "source_location": "line 108",
+      "weight": 0.8
+    },
+    {
+      "source": "sage_agent_SageAgent",
+      "target": "guardian_agent_GuardianAgent",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "agents/sage/agent.py",
+      "source_location": "line 109",
+      "weight": 0.8
+    },
+    {
+      "source": "oracle_agent_OracleAgent",
+      "target": "commander_agent_CommanderAgent",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "agents/oracle/agent.py",
+      "source_location": "line 144",
+      "weight": 0.85
+    },
+    {
+      "source": "commander_agent_CommanderAgent",
+      "target": "guardian_agent_GuardianAgent",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "agents/commander/agent.py",
+      "source_location": "line 108",
+      "weight": 0.9
+    },
+    {
+      "source": "architect_agent_ArchitectAgent",
+      "target": "commander_agent_CommanderAgent",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "agents/architect/agent.py",
+      "source_location": "line 184",
+      "weight": 0.75
+    },
+    {
+      "source": "hard_rules_validate_hard_rules",
+      "target": "guardian_agent_GuardianAgent",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "agents/guardian/validators/hard_rules.py",
+      "source_location": null,
+      "weight": 0.9
+    },
+    {
+      "source": "concept_circuit_breaker",
+      "target": "commander_agent_CommanderAgent",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "agents/commander/agent.py",
+      "source_location": "line 64",
+      "weight": 0.85
+    },
+    {
+      "source": "news_fetch_cryptopanic",
+      "target": "news_fetch_rss_headlines",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "agents/oracle/data_sources/news.py",
+      "source_location": null,
+      "weight": 0.8
+    },
+    {
+      "source": "news_fetch_fear_and_greed",
+      "target": "news_fetch_cryptopanic",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "agents/oracle/data_sources/news.py",
+      "source_location": null,
+      "weight": 0.7
+    },
+    {
+      "source": "freqtrade_FreqtradeClient",
+      "target": "backtest_runner_run_backtest",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "agents/oracle/data_sources/freqtrade.py",
+      "source_location": null,
+      "weight": 0.75
+    },
+    {
+      "source": "protocols_MarketSignal",
+      "target": "protocols_TradeDecision",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "agents/shared/protocols.py",
+      "source_location": null,
+      "weight": 0.85
+    },
+    {
+      "source": "protocols_TradeDecision",
+      "target": "protocols_OrderParams",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "agents/shared/protocols.py",
+      "source_location": null,
+      "weight": 0.85
+    },
+    {
+      "source": "base_agent_build_shared_context",
+      "target": "concept_sage_insights",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/shared/base_agent.py",
+      "source_location": "line 161",
+      "weight": 1.0
+    },
+    {
+      "source": "base_agent_build_shared_context",
+      "target": "db_get_session",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/shared/base_agent.py",
+      "source_location": "line 145",
+      "weight": 1.0
+    },
+    {
+      "source": "commander_agent_CommanderAgent",
+      "target": "base_agent_build_shared_context",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/commander/agent.py",
+      "source_location": "line 102",
+      "weight": 1.0
+    },
+    {
+      "source": "guardian_agent_GuardianAgent",
+      "target": "base_agent_build_shared_context",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/guardian/agent.py",
+      "source_location": "line 68",
+      "weight": 1.0
+    },
+    {
+      "source": "oracle_agent_OracleAgent",
+      "target": "base_agent_build_shared_context",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/oracle/agent.py",
+      "source_location": "line 83",
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "signal_pipeline_flow",
+      "label": "Oracle → Commander → Guardian Signal Pipeline",
+      "nodes": [
+        "oracle_agent_OracleAgent",
+        "commander_agent_CommanderAgent",
+        "guardian_agent_GuardianAgent"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.97,
+      "source_file": "agents/shared/protocols.py"
+    },
+    {
+      "id": "sage_insight_broadcast",
+      "label": "Sage Insight Consumer Triad (Oracle, Guardian, Architect)",
+      "nodes": [
+        "oracle_agent_OracleAgent",
+        "guardian_agent_GuardianAgent",
+        "architect_agent_ArchitectAgent"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "agents/sage/agent.py"
+    },
+    {
+      "id": "risk_enforcement_layer",
+      "label": "Risk Enforcement Layer (hard_rules + Commander circuit breaker + Settings limits)",
+      "nodes": [
+        "hard_rules_validate_hard_rules",
+        "commander_agent_CommanderAgent",
+        "config_Settings"
+      ],
+      "relation": "implement",
+      "confidence": "INFERRED",
+      "confidence_score": 0.82,
+      "source_file": "agents/guardian/validators/hard_rules.py"
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

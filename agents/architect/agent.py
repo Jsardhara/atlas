@@ -3,7 +3,6 @@ import asyncio
 import json
 import logging
 import uuid
-from datetime import datetime
 from pathlib import Path
 
 from sqlalchemy import text
@@ -75,8 +74,8 @@ class ArchitectAgent(BaseAgent):
 {existing}
 
 ## Requirements
-- Target exchange: Kraken (USD pairs: BTC/USD, ETH/USD, SOL/USD)
-- Must work for both long and short (can_short = True)
+- Target broker: Alpaca (US equities — top liquid tickers from screener output)
+- Must work for both long and short (margin-eligible symbols only)
 - Timeframe: 5m or 15m preferred
 - Should exploit patterns identified in the insights above
 - Use a DIFFERENT approach from existing strategies
@@ -143,7 +142,7 @@ Generate a complete, production-ready Freqtrade strategy. Respond in JSON."""
         async with get_session() as sess:
             await sess.execute(text("""
                 UPDATE backtests SET
-                    status = :status, results = :res::jsonb,
+                    status = :status, results = CAST(:res AS jsonb),
                     sharpe_ratio = :sharpe, max_drawdown = :dd,
                     total_return = :ret, win_rate = :wr,
                     completed_at = now()
@@ -158,8 +157,8 @@ Generate a complete, production-ready Freqtrade strategy. Respond in JSON."""
                 "id": backtest_id,
             })
             await sess.execute(text("""
-                UPDATE strategies SET backtest_results = :res::jsonb,
-                    performance_metrics = :metrics::jsonb, status = 'testing'
+                UPDATE strategies SET backtest_results = CAST(:res AS jsonb),
+                    performance_metrics = CAST(:metrics AS jsonb), status = 'testing'
                 WHERE id = :id
             """), {"res": json.dumps(bt_results), "metrics": json.dumps(metrics), "id": strategy_id})
             await sess.commit()
