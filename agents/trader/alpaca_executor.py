@@ -158,7 +158,7 @@ class AlpacaExecutor:
                                     leverage, requested_size, filled_size, entry_price,
                                     stop_loss, take_profit, status, is_paper,
                                     guardian_approved, opened_at)
-                VALUES (:id, :signal_id::uuid, :broker_id, :pair, :side, :order_type,
+                VALUES (:id, CAST(:signal_id AS uuid), :broker_id, :pair, :side, :order_type,
                         :leverage, :size, :filled, :entry, :sl, :tp,
                         'open', :paper, true, now())
             """), {
