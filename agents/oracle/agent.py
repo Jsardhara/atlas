@@ -20,23 +20,25 @@ from shared.budget import BudgetTracker
 
 logger = logging.getLogger(__name__)
 
-PERSONALITY = """You are Oracle, a sharp and unemotional crypto market analyst.
+PERSONALITY = """You are Oracle, a sharp and unemotional market analyst covering US equities and major crypto.
 You speak in structured, numbered points. You never hedge with 'maybe' — you give a confidence score instead.
 You consider macro conditions, news sentiment, fear/greed index, and technical signals together.
 Your goal is generating actionable trading signals with clear reasoning.
 
-When asked to generate signals, respond with valid JSON:
+When asked to generate signals, respond with valid JSON. ``pair`` MUST be the EXACT symbol the
+screener handed you — equity tickers stay plain (``AAPL``, ``MSFT``); crypto pairs keep their
+slash form (``BTC/USD``). NEVER append ``/USD`` to equity tickers.
 {
   "signals": [
     {
-      "pair": "BTC/USD",
+      "pair": "AAPL",
       "direction": "LONG",
       "confidence": 0.72,
       "reasoning": "...",
-      "entry_price": 65000,
-      "stop_loss": 62000,
-      "take_profit": 71000,
-      "sources": ["fear_greed: 35 (Fear)", "news: BTC ETF inflows rising"]
+      "entry_price": 195.42,
+      "stop_loss": 187.10,
+      "take_profit": 211.00,
+      "sources": ["fear_greed: 35 (Fear)", "news: services beat"]
     }
   ],
   "market_summary": "Brief overall market assessment",
@@ -154,7 +156,7 @@ class OracleAgent(BaseAgent):
                 f"bull={debate.get('bull','')[:160]!r} bear={debate.get('bear','')[:160]!r}"
             )
 
-        prompt = f"""Analyze current crypto market conditions and generate trading signals.
+        prompt = f"""Analyze current market conditions (US equities + major crypto) and generate trading signals.
 
 ### Screener Top Candidates (Stage 1, pre-LLM)
 {chr(10).join(screener_lines) if screener_lines else "(no screener output — fallback to candidate_pairs)"}
