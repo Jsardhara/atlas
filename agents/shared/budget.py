@@ -6,7 +6,7 @@ but the cap is best-effort.
 
 Usage::
 
-    tracker = BudgetTracker(redis, key_prefix="atlas:budget:tauric")
+    tracker = BudgetTracker(redis, key_prefix="atlas:budget:debate")
     if not await tracker.can_afford(estimated_cost_usd=0.30, daily_cap=5.0):
         return None
     await tracker.record(actual_cost_usd=0.27)
