@@ -33,11 +33,6 @@ class Settings(BaseSettings):
     # Redis
     redis_url: str = "redis://redis:6379/0"
 
-    # Freqtrade
-    freqtrade_url: str = "http://freqtrade:8080"
-    freqtrade_username: str = "freqtrader"
-    freqtrade_password: str = "SuperSecret1!"
-
     # Trading safety
     live_trading_enabled: bool = False
     max_leverage: int = 5

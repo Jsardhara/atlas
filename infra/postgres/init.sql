@@ -98,8 +98,7 @@ CREATE TABLE signals (
     take_profit      NUMERIC,
     status           TEXT DEFAULT 'pending',  -- pending|approved|rejected|modified|expired
     guardian_notes   TEXT,
-    modified_params  JSONB,
-    freqtrade_signal JSONB
+    modified_params  JSONB
 );
 CREATE INDEX signals_pair_status ON signals(pair, status, created_at DESC);
 

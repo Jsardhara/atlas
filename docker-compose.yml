@@ -59,29 +59,6 @@ services:
     restart: unless-stopped
 
   # ---------------------------------------------------------------------------
-  # Freqtrade Engine (existing bot, imported into atlas network)
-  # ---------------------------------------------------------------------------
-  freqtrade:
-    image: freqtradeorg/freqtrade:stable
-    volumes:
-      - atlas_userdata:/freqtrade/user_data
-      - ./infra/freqtrade/config.json:/freqtrade/user_data/config.json:ro
-      - ./infra/freqtrade/strategies:/freqtrade/user_data/strategies
-    env_file: .env
-    environment:
-      - ALPACA_API_KEY=${ALPACA_API_KEY}
-      - ALPACA_SECRET_KEY=${ALPACA_SECRET_KEY}
-    command: >
-      trade
-      --config /freqtrade/user_data/config.json
-      --strategy FreqAISelfImprove
-    networks:
-      - atlas_network
-    ports:
-      - "127.0.0.1:8080:8080"
-    restart: unless-stopped
-
-  # ---------------------------------------------------------------------------
   # Cloudflare Tunnel (remote access — set CF_TUNNEL_TOKEN to enable)
   # Only runs under the `remote` profile.
   # ---------------------------------------------------------------------------
