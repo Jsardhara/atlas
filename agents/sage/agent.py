@@ -84,21 +84,29 @@ class SageAgent(BaseAgent):
             """))
             agg = dict(stats.fetchone()._mapping)
 
-        # Serialize for JSON (handle Decimal/datetime)
+        # Serialize for JSON (handle Decimal/datetime/text columns).
+        # Only cast to float when the value is actually numeric — text
+        # columns like pair/side/status/order_type stay strings.
+        def _as_jsonable(v):
+            if v is None:
+                return None
+            if hasattr(v, "isoformat"):
+                return v.isoformat()
+            if isinstance(v, (int, float)):
+                return v
+            try:
+                return float(v)
+            except (TypeError, ValueError):
+                return str(v)
+
         trades_json = []
         for t in trades[:50]:  # Limit context size
-            row = {}
-            for k, v in t.items():
-                if hasattr(v, 'isoformat'):
-                    row[k] = v.isoformat()
-                else:
-                    row[k] = float(v) if v is not None else None
-            trades_json.append(row)
+            trades_json.append({k: _as_jsonable(v) for k, v in t.items()})
 
         prompt = f"""Analyze these {len(trades)} recent trades and provide deep learning insights.
 
 ## Aggregate Statistics
-{json.dumps({k: float(v) if v else 0 for k, v in agg.items()}, indent=2)}
+{json.dumps({k: _as_jsonable(v) for k, v in agg.items()}, indent=2, default=str)}
 
 ## Individual Trades (most recent 50)
 {json.dumps(trades_json, indent=2)}
@@ -116,7 +124,7 @@ Respond in JSON as specified in your system prompt."""
         await self.save_memory("latest_insights", {
             **insights,
             "trade_count": len(trades),
-            "stats": {k: float(v) if v else 0 for k, v in agg.items()},
+            "stats": {k: _as_jsonable(v) for k, v in agg.items()},
             "analyzed_at": datetime.utcnow().isoformat(),
         })
 
