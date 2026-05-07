@@ -83,7 +83,7 @@ async def _publish_command(
 ) -> str:
     msg_id = str(uuid.uuid4())
     body = {
-        "source_agent": "jarvis",
+        "source_agent": "user",
         "target_agent": target_agent,
         "message_type": "agent_command",
         "payload": {"command": command, **(payload or {})},
