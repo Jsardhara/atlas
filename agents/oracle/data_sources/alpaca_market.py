@@ -145,8 +145,22 @@ def _asset_to_pair_info(asset: Any) -> PairInfo | None:
         return None
 
 
+def _universe_whitelist() -> set[str]:
+    """Parse ATLAS_UNIVERSE_WHITELIST env var into an upper-cased set.
+
+    Empty value or unset → empty set (= no cap, legacy behavior).
+    """
+    raw = os.environ.get("ATLAS_UNIVERSE_WHITELIST", "")
+    return {s.strip().upper() for s in raw.split(",") if s.strip()}
+
+
 async def discover_universe(force_refresh: bool = False) -> list[PairInfo]:
-    """Return active US-equity + USD-quoted crypto pairs from Alpaca."""
+    """Return active US-equity + USD-quoted crypto pairs from Alpaca.
+
+    When ``ATLAS_UNIVERSE_WHITELIST`` is set the result is capped to that
+    set so the screener does not walk all ~13k tradable assets at the
+    Alpaca rate-limit (which makes a single scan take hours).
+    """
     if (
         not force_refresh
         and _cache.universe is not None
@@ -177,15 +191,22 @@ async def discover_universe(force_refresh: bool = False) -> list[PairInfo]:
         logger.error("Alpaca discover_universe error: %s", exc)
         return _cache.universe or []
 
+    whitelist = _universe_whitelist()
     pairs: list[PairInfo] = []
     for asset in list(equities) + list(cryptos):
         info = _asset_to_pair_info(asset)
-        if info and info.status == "online" and asset.tradable:
-            pairs.append(info)
+        if not info or info.status != "online" or not asset.tradable:
+            continue
+        if whitelist and info.wsname.upper() not in whitelist:
+            continue
+        pairs.append(info)
 
     _cache.universe = pairs
     _cache.universe_at = time.monotonic()
-    logger.info("Alpaca universe loaded: %d tradable assets", len(pairs))
+    logger.info(
+        "Alpaca universe loaded: %d tradable assets (whitelist=%d)",
+        len(pairs), len(whitelist),
+    )
     return pairs
 
 

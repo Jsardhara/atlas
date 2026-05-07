@@ -251,6 +251,18 @@ Return JSON as specified in your system prompt."""
     async def process_message(self, msg: AtlasMessage) -> None:
         if msg.message_type == MessageType.CHAT_MESSAGE and msg.target_agent == AgentID.ORACLE:
             await self._on_chat(msg)
+        elif (
+            msg.message_type == MessageType.USER_COMMAND
+            and msg.target_agent == AgentID.ORACLE
+            and (msg.payload or {}).get("command") == "scan"
+        ):
+            # /control/oracle-scan publishes a USER_COMMAND we run as a fresh
+            # research cycle without waiting for the 15-min timer.
+            logger.info(
+                "[Oracle] Ad-hoc scan triggered: reason=%s",
+                (msg.payload or {}).get("reason", "unspecified"),
+            )
+            asyncio.create_task(self._research_cycle())
 
     async def _on_chat(self, msg: AtlasMessage) -> None:
         response = await self.think(

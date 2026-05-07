@@ -57,6 +57,18 @@ class Settings(BaseSettings):
     debate_daily_budget_usd: float = 5.0  # informational cap (subscription-billed)
     debate_per_call_budget_usd: float = 0.50  # per-ticker estimated ceiling
 
+    # Universe whitelist — caps the screener to a known-liquid subset so
+    # scoring 12k+ Alpaca assets doesn't take hours. Comma-separated symbols
+    # (equities + crypto pairs). Empty value = no cap (legacy behavior).
+    atlas_universe_whitelist: str = (
+        "AAPL,MSFT,NVDA,GOOGL,AMZN,META,TSLA,AVGO,JPM,V,"
+        "UNH,XOM,LLY,WMT,MA,PG,JNJ,HD,COST,ORCL,"
+        "ABBV,BAC,KO,MRK,CVX,PEP,ADBE,CSCO,NFLX,CRM,"
+        "AMD,WFC,TMO,LIN,ACN,DIS,MCD,ABT,DHR,VZ,"
+        "PM,CMCSA,IBM,GE,QCOM,INTU,T,AXP,UBER,GS,"
+        "BTC/USD,ETH/USD,SOL/USD"
+    )
+
     model_config = {"env_file": ".env", "extra": "ignore"}
 
 
